@@ -6,8 +6,8 @@ function App() {
   // return <>Dashboard</>;
   const tasks: any = [
     {
-      start: new Date(2022, 1, 1),
-      end: new Date(2022, 1, 2),
+      start: new Date(2021, 11, 31),
+      end: new Date(2022, 0, 1),
       stageName: "Grooming",
       subStageName: "Test",
       team: "FrontEnd",
@@ -19,8 +19,8 @@ function App() {
       styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
     },
     {
-      start: new Date(2022, 1, 2),
-      end: new Date(2022, 1, 8),
+      start: new Date(2022, 0, 2),
+      end: new Date(2022, 0, 8),
       stageName: "Development",
 
       team: "FrontEnd",
@@ -33,8 +33,8 @@ function App() {
       styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
     },
     {
-      start: new Date(2022, 1, 2),
-      end: new Date(2022, 1, 15),
+      start: new Date(2022, 0, 2),
+      end: new Date(2022, 0, 15),
       stageName: "Quality Assurance",
       subStageName: "Test",
       team: "FrontEnd",
@@ -47,8 +47,8 @@ function App() {
       styles: { progressColor: "#ffbb54", progressSelectedColor: "#ff9e0d" },
     },
     {
-      start: new Date(2022, 1, 2),
-      end: new Date(2022, 1, 6),
+      start: new Date(2022, 0, 2),
+      end: new Date(2022, 0, 6),
       stageName: "Quality Assurance",
       subStageName: "Test",
       team: "FrontEnd",
