@@ -15,39 +15,29 @@ export const TaskListHeaderDefault: React.FC<{
       className={styles.ganttTable}
       style={{
         fontFamily: fontFamily,
-        fontSize: fontSize,
-        backgroundColor: 'gray',
+        fontSize: fontSize
       }}
     >
       <div
         className={styles.ganttTable_Header}
         style={{
-          height: headerHeight - 2,
+          height: headerHeight
         }}
       >
         {
-          headers.map((headerItem, headerIndex) => {
+          headers.map((headerItem) => {
             return (
               <React.Fragment key={headerItem.title}>
                 <div
                   className={styles.ganttTable_HeaderItem}
                   style={{
                     minWidth: rowWidth,
+                    background: '#F2F4F7',
+                    color: '#101828'
                   }}
                 >
                   &nbsp;{headerItem.title}
                 </div>
-                {
-                  headerIndex !== headers.length - 1 && (
-                    <div
-                      className={styles.ganttTable_HeaderSeparator}
-                      style={{
-                        height: headerHeight * 0.5,
-                        marginTop: headerHeight * 0.2,
-                      }}
-                    />
-                  )
-                }
               </React.Fragment>
             )
           })

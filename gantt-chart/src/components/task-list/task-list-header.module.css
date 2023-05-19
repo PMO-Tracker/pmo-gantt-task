@@ -1,16 +1,13 @@
 .ganttTable {
   display: table;
-  border-bottom: #e6e4e4 1px solid;
+  /* border-bottom: #e6e4e4 1px solid;
   border-top: #e6e4e4 1px solid;
-  border-left: #e6e4e4 1px solid;
-  background-color: gray;
-  color: white;
+  border-left: #e6e4e4 1px solid; */
 }
 
 .ganttTable_Header {
   display: table-row;
   list-style: none;
-  background-color: gray;
   color: white;
 }
 
@@ -24,4 +21,11 @@
   display: table-cell;
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
+  font-weight: 600;
+  font-size: 16px;
+  color: #101828;
+}
+
+.ganttTable_HeaderItem:first-of-type {
+  border-top-left-radius: 8px;
 }

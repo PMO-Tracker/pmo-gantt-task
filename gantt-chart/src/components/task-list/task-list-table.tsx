@@ -75,7 +75,7 @@ export const TaskListTableDefault: React.FC<{
             >
               {
                 headers.map((rowItem, rowItemIndex) => {
-                  if (rowItemIndex === 0) {
+                  if (rowItemIndex === 0 && onExpanderClick) {
                     return (
                       <div
                         className={`${styles.taskListCell} ${styles.taskListCursorPointer}`}

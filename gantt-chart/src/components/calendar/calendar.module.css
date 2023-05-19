@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 .calendarBottomText {
   text-anchor: middle;
   fill: #333;
@@ -7,6 +9,14 @@
   -ms-user-select: none;
   user-select: none;
   pointer-events: none;
+  font-family: 'Inter';
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.calendarUpperBottomText {
+  font-size: 16px !important;
+  font-weight: 600 !important;
 }
 
 .calendarTopTick {
@@ -25,7 +35,5 @@
 }
 
 .calendarHeader {
-  fill: #ffffff;
-  stroke: #e0e0e0;
-  stroke-width: 1.4;
+  fill: #F2F4F7;
 }
