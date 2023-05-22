@@ -1,16 +1,12 @@
 .taskListWrapper {
   display: table;
-  border-bottom: #e6e4e4 1px solid;
-  border-left: #e6e4e4 1px solid;
+  /* border-bottom: #e6e4e4 1px solid;
+  border-left: #e6e4e4 1px solid; */
 }
 
 .taskListTableRow {
   display: table-row;
   text-overflow: ellipsis;
-}
-
-.taskListTableRow:nth-of-type(even) {
-  background-color: #f5f5f5;
 }
 
 .taskListCell {
@@ -19,6 +15,8 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color:#667085;
+  font-size: 14px;
 }
 .taskListCell a {
   cursor: pointer;
@@ -26,9 +24,6 @@
 }
 .taskListCursorPointer {
   cursor: pointer;
-}
-.taskListNameWrapper {
-  display: flex;
 }
 
 .taskListExpander {

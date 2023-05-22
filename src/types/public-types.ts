@@ -3,7 +3,8 @@ import { CalendarRanges } from "./date-setup";
 export interface TableHeader {
   key: string;
   title: string,
-  showAddButton?: boolean
+  showAddButton?: boolean,
+  bullet?: boolean
 };
 
 export enum ViewMode {
