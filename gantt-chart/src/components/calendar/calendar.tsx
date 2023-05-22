@@ -125,8 +125,10 @@ export const Calendar: React.FC<CalendarProps> = ({
     const topValues: ReactChild[] = [];
     const bottomValues: ReactChild[] = [];
     for (let i = 0; i < dateSetup.dates.length; i++) {
-      const startDate = dateSetup.ranges[i].startDate.toDateString();
-      const endDate = dateSetup.ranges[i].endDate.toDateString();
+      // const startDate = dateSetup.ranges[i].startDate.getDate();
+      const startDate = `${dateSetup.ranges[i].startDate.getDate()} ${getLocaleMonth(dateSetup.ranges[i].startDate, locale).substring(0,3)}`
+      const endDate = `${dateSetup.ranges[i].endDate.getDate()} ${getLocaleMonth(dateSetup.ranges[i].endDate, locale).substring(0,3)}`;
+
       const sprint = dateSetup.ranges[i].sprint;
       const rangeToShow = `${startDate} - ${endDate}`;
       bottomValues.push(
@@ -134,7 +136,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         <text
           y={headerHeight * 0.4}
           x={columnWidth * i + columnWidth * 0.5}
-          className={styles.calendarBottomText}
+          className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
         >
           {sprint}
         </text>
