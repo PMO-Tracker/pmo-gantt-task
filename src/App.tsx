@@ -121,7 +121,7 @@ function App() {
         }}
         barFill={16}
         // barBackgroundColor='#F04438'
-        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook'}]}
+        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true}]}
         addRecord={handleAddRecord}
       // onExpanderClick={handleExpanderClick}
       />

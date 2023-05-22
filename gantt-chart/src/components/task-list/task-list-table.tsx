@@ -103,17 +103,24 @@ export const TaskListTableDefault: React.FC<{
                       </div>
                     )
                   } else {
+                    const textStyle = rowItem.bullet ? {
+                      backgroundColor: t[rowItem.key],
+                      color: '#fefefe',
+                      borderRadius: '15px',
+                      padding: '6px 16px'
+                    } : {};
+
                     return (
-                    <div
-                      className={styles.taskListCell}
-                      style={{
-                        minWidth: rowWidth,
-                        maxWidth: rowWidth,
-                      }}
-                      key={`${t.id}-${t[rowItem.key]}`}
-                    >
-                      &nbsp;{t[rowItem.key] ? t[rowItem.key] : rowItem.showAddButton ? <a onClick={() => addRecord(rowItem.key)}>{`Add ${rowItem.title}`}</a> : ''}
-                    </div>
+                      <div
+                        className={styles.taskListCell}
+                        style={{
+                          minWidth: rowWidth,
+                          maxWidth: rowWidth
+                        }}
+                        key={`${t.id}-${t[rowItem.key]}`}
+                      >
+                        {t[rowItem.key] ? <span style={{ ...textStyle }}>{t[rowItem.key]}</span> : rowItem.showAddButton ? <a onClick={() => addRecord(rowItem.key)}>{`Add ${rowItem.title}`}</a> : ''}
+                      </div>
                     )
                   }
                 })
