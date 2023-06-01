@@ -6,6 +6,21 @@
   border-top-right-radius: 8px;
 }
 
+.milestoneContainer {
+  display: flex;
+  align-items: center;
+}
+
+.milestoneTitle {
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.milestoneDate {
+  font-size: 12px;
+}
+
 .horizontalContainer {
   margin: 0;
   padding: 0;
