@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { BarTask } from "../../types/bar-task";
-import { TableHeader, Task } from "../../types/public-types";
+import { TableHeader, TableMilestones, Task } from "../../types/public-types";
 
 export type TaskListProps = {
   headerHeight: number;
@@ -16,6 +16,7 @@ export type TaskListProps = {
   taskListRef: React.RefObject<HTMLDivElement>;
   horizontalContainerClass?: string;
   selectedTask: BarTask | undefined;
+  milestones: TableMilestones[],
   setSelectedTask: (task: string) => void;
   onExpanderClick: (task: Task) => void;
   onRowClick: (task: Task) => void,
@@ -26,6 +27,7 @@ export type TaskListProps = {
     fontFamily: string;
     fontSize: string;
     headers: TableHeader[];
+    milestones: TableMilestones[]
   }>;
   TaskListTable: React.FC<{
     rowHeight: number;
@@ -63,6 +65,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   TaskListHeader,
   TaskListTable,
   headers,
+  milestones
 }) => {
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -76,7 +79,8 @@ export const TaskList: React.FC<TaskListProps> = ({
     fontFamily,
     fontSize,
     rowWidth,
-    headers
+    headers,
+    milestones
   };
   const selectedTaskId = selectedTask ? selectedTask.id : "";
   const tableProps = {

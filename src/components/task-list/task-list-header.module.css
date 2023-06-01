@@ -11,6 +11,10 @@
   color: white;
 }
 
+.milestoneHeader {
+  display: flex;
+}
+
 .ganttTable_HeaderSeparator {
   border-right: 1px solid rgb(196, 196, 196);
   opacity: 1;
@@ -24,8 +28,4 @@
   font-weight: 600;
   font-size: 16px;
   color: #101828;
-}
-
-.ganttTable_HeaderItem:first-of-type {
-  border-top-left-radius: 8px;
-}
+};

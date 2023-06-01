@@ -7,6 +7,11 @@ export interface TableHeader {
   bullet?: boolean
 };
 
+export interface TableMilestones {
+  date: string;
+  title: string
+};
+
 export enum ViewMode {
   Hour = "Hour",
   QuarterDay = "Quarter Day",
@@ -87,6 +92,7 @@ export interface EventOption {
   onExpanderClick?: (task: Task) => void;
   onRowClick?: (task: Task) => void;
   addRecord?: (item: string) => void;
+  onMilestoneClick?: (item: TableMilestones) => void;
 }
 
 export interface DisplayOption {
@@ -157,5 +163,6 @@ export interface StylingOption {
 
 export interface GanttProps extends CalendarRanges, EventOption, DisplayOption, StylingOption {
   tasks: Task[];
-  headers?:TableHeader[]
+  headers?:TableHeader[],
+  milestones?: TableMilestones[]
 }

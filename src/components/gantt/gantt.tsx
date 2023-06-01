@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { ViewMode, GanttProps, Task } from "../../types/public-types";
+import { ViewMode, GanttProps, Task, TableMilestones } from "../../types/public-types";
 import { GridProps } from "../grid/grid";
 import { ganttDateRange, seedDates } from "../../helpers/date-helper";
 import { CalendarProps } from "../calendar/calendar";
@@ -60,6 +60,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   TaskListTable = TaskListTableDefault,
   headers = [{ key: 'stageName', title: 'Stage Name' }, { key: 'subStageName', title: 'SubStage Name' }, { key: 'team', title: 'Team' }, { key: 'jiraEpics', title: 'Jira Epics' }],
   ranges = {},
+  milestones = [],
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -68,7 +69,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   onSelect,
   onExpanderClick,
   onRowClick,
-  addRecord
+  addRecord,
+  onMilestoneClick
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLDivElement>(null);
@@ -405,6 +407,12 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       addRecord(item);
     }
   };
+
+  const handleMilestoneClick = (milestone: TableMilestones) => {
+    if (onMilestoneClick) {
+      onMilestoneClick(milestone);
+    }
+  };
   
   const gridProps: GridProps = {
     columnWidth,
@@ -464,6 +472,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     horizontalContainerClass: styles.horizontalContainer,
     selectedTask,
     taskListRef,
+    milestones,
     setSelectedTask: handleSelectedTask,
     onExpanderClick: handleExpanderClick,
     onRowClick: handleOnRowClick,
@@ -488,6 +497,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
           ganttHeight={ganttHeight}
           scrollY={scrollY}
           scrollX={scrollX}
+          milestones={milestones}
+          onMilestoneClick={handleMilestoneClick}
         />
         {ganttEvent.changedTask && (
           <Tooltip
