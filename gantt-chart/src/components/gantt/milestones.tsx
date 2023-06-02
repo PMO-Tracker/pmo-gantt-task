@@ -25,10 +25,10 @@ export const Milestones: React.FC<Milestones> = ({
             }}>
             <div style={{ width: columnWidth }} />
             {
-                milestones.map(({ title, date }) => (
-                    <div style={{ width: columnWidth }} key={title}>
-                        <span className={styles.milestoneTitle} onClick={() => onMilestoneClick({ title, date })}>{title}</span>
-                        <br /><span className={styles.milestoneDate}>({date})</span>
+                milestones.map((milestone) => (
+                    <div style={{ width: columnWidth }} key={milestone.title}>
+                        <span className={styles.milestoneTitle} onClick={() => onMilestoneClick(milestone)}>{milestone.title}</span>
+                        <br /><span className={styles.milestoneDate}>({milestone.endDate})</span>
                     </div>
                 ))
             }

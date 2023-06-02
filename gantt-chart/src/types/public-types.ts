@@ -8,8 +8,10 @@ export interface TableHeader {
 };
 
 export interface TableMilestones {
-  date: string;
-  title: string
+  title: string;
+  endDate?: string;
+  startDate?: string;
+  status?:string
 };
 
 export enum ViewMode {
