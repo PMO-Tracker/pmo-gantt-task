@@ -257,25 +257,25 @@ function App() {
             endDate: '04/20/2023'
           }
         }}
-        barFill={16}
+        barFill={46}
         // barBackgroundColor='#F04438'
         headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true}]}
         addRecord={handleAddRecord}
       // onExpanderClick={handleExpanderClick}
       milestones={[{
-        date: '04/16/2023',
+        endDate: '04/16/2023',
         title: 'Development Start'
       },
       {
-        date: '04/16/2023',
+        endDate: '04/16/2023',
         title: 'Architecture Approved'
       },
       {
-        date: '04/16/2023',
+        endDate: '04/16/2023',
         title: 'Integration Testing'
       },
       {
-        date: '04/16/2023',
+        endDate: '04/16/2023',
         title: 'Go Live'
       }]}
       onMilestoneClick={() => alert()}
