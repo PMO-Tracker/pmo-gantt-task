@@ -24,20 +24,20 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   y,
   width,
   height,
-  isSelected,
-  progressX,
-  progressWidth,
+  // isSelected,
+  // progressX,
+  // progressWidth,
   barCornerRadius,
   styles,
   onMouseDown,
 }) => {
-  const getProcessColor = () => {
-    return isSelected ? styles.progressSelectedColor : styles.progressColor;
-  };
+  // const getProcessColor = () => {
+  //   return isSelected ? styles.progressSelectedColor : styles.progressColor;
+  // };
 
-  const getBarColor = () => {
-    return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
-  };
+  // const getBarColor = () => {
+  //   return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
+  // };
 
   return (
     <g onMouseDown={onMouseDown}>
@@ -48,10 +48,10 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill={getBarColor()}
+        fill={styles.backgroundColor}
         className={style.barBackground}
       />
-      <rect
+      {/* <rect
         x={progressX}
         width={progressWidth}
         y={y}
@@ -59,7 +59,7 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         ry={barCornerRadius}
         rx={barCornerRadius}
         fill={getProcessColor()}
-      />
+      /> */}
     </g>
   );
 };
