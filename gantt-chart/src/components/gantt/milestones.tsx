@@ -10,6 +10,12 @@ export type Milestones = {
     onMilestoneClick: (item: TableMilestones) => void;
 };
 
+const backgroundColor = {
+    DONE: '#CAF1CE',
+    IMPACTED: '#FFD0D0',
+    IN_PROGRESS: '#fefefe'
+};
+
 export const Milestones: React.FC<Milestones> = ({
     milestones,
     height,
@@ -17,6 +23,7 @@ export const Milestones: React.FC<Milestones> = ({
     columnWidth,
     onMilestoneClick
 }) => {
+
     return (
         <div className={styles.milestoneContainer}
             style={{
@@ -26,7 +33,16 @@ export const Milestones: React.FC<Milestones> = ({
             <div style={{ width: columnWidth }} />
             {
                 milestones.map((milestone) => (
-                    <div style={{ width: columnWidth }} key={milestone.title}>
+                    <div
+                        style={{
+                            width: columnWidth,
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            background: backgroundColor[milestone.status || 'IN_PROGRESS']
+                        }}
+                        key={milestone.title}>
                         <span className={styles.milestoneTitle} onClick={() => onMilestoneClick(milestone)}>{milestone.title}</span>
                         <br /><span className={styles.milestoneDate}>({milestone.endDate})</span>
                     </div>
