@@ -29,7 +29,7 @@ function initTasks() {
         12,
         28
       ),
-      id: "Task 0",
+      id: "Task 0wertyuio",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -45,7 +45,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
       end: new Date(currentDate.getFullYear(), 1, 17, 10, 0),
-      id: "Task 1",
+      id: "Task 1asdsadsadzczx",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -62,7 +62,7 @@ function initTasks() {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
       end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 25, 0, 0),
       stageName: "Discussion with team",
-      id: "Task 2",
+      id: "Task 2asdasda",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -83,7 +83,7 @@ function initTasks() {
         12,
         28
       ),
-      id: "Task 0",
+      id: "Task 0asdasd",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -99,7 +99,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
       end: new Date(currentDate.getFullYear(), 1, 20, 10, 0),
-      id: "Task 1",
+      id: "Task 123423432",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -113,10 +113,14 @@ function initTasks() {
 
     },
     {
-      start: new Date(currentDate.getFullYear(), 4, 8),
-      end: new Date(currentDate.getFullYear(), 4, 9),
-      stageName: "Discussion with team",
-      id: "Task 2",
+      start: new Date(currentDate.getFullYear(), 3, 2),
+      end: new Date(
+        currentDate.getFullYear(),
+        3,
+        10
+      ),
+      stageName: "Discussion with team12345678",
+      id: "Task asdasd2",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -135,7 +139,7 @@ function initTasks() {
         3,
         10
       ),
-      id: "Task 0",
+      id: "Task 0poijhgvc",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -149,10 +153,16 @@ function initTasks() {
 
     },
     {
-      start: new Date(currentDate.getFullYear(), 3, 16),
-      end: new Date(currentDate.getFullYear(), 3, 20),
-      stageName: "Discussion with team",
-      id: "Task 2",
+      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+      end: new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        2,
+        12,
+        28
+      ),
+      stageName: "Discussion with teamasdsadasd",
+      id: "Task 2zxcxzczxc",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -166,7 +176,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), 2, 26),
       end: new Date(currentDate.getFullYear(), 3, 1),
-      id: "Task 1",
+      id: "Task 1ipupio",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -174,7 +184,7 @@ function initTasks() {
       styles: {
         backgroundColor: '#12B76A'
       },
-      stageName: "Discussion with team",
+      stageName: "Discussion with teamassadasdasd",
       outlook: 'green'
 
 
@@ -264,11 +274,13 @@ function App() {
       // onExpanderClick={handleExpanderClick}
       milestones={[{
         endDate: '04/16/2023',
-        title: 'Development Start'
+        title: 'Development Start',
+        status: 'DONE',
       },
       {
         endDate: '04/16/2023',
-        title: 'Architecture Approved'
+        title: 'Architecture Approved',
+        status: 'DONE'
       },
       {
         endDate: '04/16/2023',
@@ -276,7 +288,8 @@ function App() {
       },
       {
         endDate: '04/16/2023',
-        title: 'Go Live'
+        title: 'Go Live',
+        status: 'IMPACTED'
       }]}
       onMilestoneClick={() => alert()}
       />
