@@ -4,7 +4,8 @@ export interface TableHeader {
   key: string;
   title: string,
   showAddButton?: boolean,
-  bullet?: boolean
+  bullet?: boolean,
+  render? : (task: Task) => any;
 };
 
 export interface TableMilestones {
@@ -51,6 +52,7 @@ export interface Task {
   hideChildren?: boolean;
   displayOrder?: number;
   hide?:boolean;
+  barText? :string
 }
 
 export interface EventOption {
