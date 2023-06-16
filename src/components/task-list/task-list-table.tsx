@@ -109,7 +109,9 @@ export const TaskListTableDefault: React.FC<{
                       borderRadius: '15px',
                       padding: '6px 16px'
                     } : {};
-
+                    if(rowItem.render){
+                      return rowItem.render(t)
+                    }
                     return (
                       <div
                         className={styles.taskListCell}
@@ -117,7 +119,7 @@ export const TaskListTableDefault: React.FC<{
                           minWidth: rowWidth,
                           maxWidth: rowWidth
                         }}
-                        key={`${t.id}-${t[rowItem.key]}`}
+                        key={`${t.id}-${t[rowItem.key] ? t[rowItem.key] : rowItem.key}`}
                       >
                         {t[rowItem.key] ? <span style={{ ...textStyle }}>{t[rowItem.key]}</span> : rowItem.showAddButton ? <a onClick={() => addRecord(rowItem.key)}>{`Add ${rowItem.title}`}</a> : ''}
                       </div>
