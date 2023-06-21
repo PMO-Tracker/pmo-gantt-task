@@ -70,7 +70,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   onExpanderClick,
   onRowClick,
   addRecord,
-  onMilestoneClick
+  onMilestoneClick,
+  onStageRowClick
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLDivElement>(null);
@@ -422,6 +423,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     dates: dateSetup.dates,
     todayColor,
     rtl,
+    onStageRowClick
   };
   const calendarProps: CalendarProps = {
     dateSetup,

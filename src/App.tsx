@@ -29,7 +29,7 @@ function initTasks() {
         12,
         28
       ),
-      id: "Task 0wertyuio",
+      id: "Task 0",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -45,7 +45,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
       end: new Date(currentDate.getFullYear(), 1, 17, 10, 0),
-      id: "Task 1asdsadsadzczx",
+      id: "Task 1",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -62,7 +62,7 @@ function initTasks() {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
       end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 25, 0, 0),
       stageName: "Discussion with team",
-      id: "Task 2asdasda",
+      id: "Task 2",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -83,7 +83,7 @@ function initTasks() {
         12,
         28
       ),
-      id: "Task 0asdasd",
+      id: "Task 0",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -99,7 +99,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
       end: new Date(currentDate.getFullYear(), 1, 20, 10, 0),
-      id: "Task 123423432",
+      id: "Task 1",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -113,14 +113,10 @@ function initTasks() {
 
     },
     {
-      start: new Date(currentDate.getFullYear(), 3, 2),
-      end: new Date(
-        currentDate.getFullYear(),
-        3,
-        10
-      ),
-      stageName: "Discussion with team12345678",
-      id: "Task asdasd2",
+      start: new Date(currentDate.getFullYear(), 4, 8),
+      end: new Date(currentDate.getFullYear(), 4, 9),
+      stageName: "Discussion with team",
+      id: "Task 2",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -139,7 +135,7 @@ function initTasks() {
         3,
         10
       ),
-      id: "Task 0poijhgvc",
+      id: "Task 0",
       // progress: 45,
       type: "task",
       project: "ProjectSample",
@@ -153,16 +149,10 @@ function initTasks() {
 
     },
     {
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-      end: new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        2,
-        12,
-        28
-      ),
-      stageName: "Discussion with teamasdsadasd",
-      id: "Task 2zxcxzczxc",
+      start: new Date(currentDate.getFullYear(), 3, 16),
+      end: new Date(currentDate.getFullYear(), 3, 20),
+      stageName: "Discussion with team",
+      id: "Task 2",
       // dependencies: ["Task 1"],
       type: "task",
       project: "ProjectSample",
@@ -176,7 +166,7 @@ function initTasks() {
     {
       start: new Date(currentDate.getFullYear(), 2, 26),
       end: new Date(currentDate.getFullYear(), 3, 1),
-      id: "Task 1ipupio",
+      id: "Task 1",
       // dependencies: ["Task 0"],
       type: "task",
       project: "ProjectSample",
@@ -184,7 +174,7 @@ function initTasks() {
       styles: {
         backgroundColor: '#12B76A'
       },
-      stageName: "Discussion with teamassadasdasd",
+      stageName: "Discussion with team",
       outlook: 'green'
 
 
@@ -208,7 +198,7 @@ function App() {
   };
 
   return (
-    <div style={{margin: '20px', textAlign: 'center', border: '1px solid #F2F4F7', borderRadius: '8px'}}>
+    <div style={{ margin: '20px', textAlign: 'center', border: '1px solid #F2F4F7', borderRadius: '8px' }}>
       <Gantt
         tasks={tasks}
         viewMode={ViewMode.Range}
@@ -269,29 +259,27 @@ function App() {
         }}
         barFill={46}
         // barBackgroundColor='#F04438'
-        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true}]}
+        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true }]}
         addRecord={handleAddRecord}
-      // onExpanderClick={handleExpanderClick}
-      milestones={[{
-        endDate: '04/16/2023',
-        title: 'Development Start',
-        status: 'DONE',
-      },
-      {
-        endDate: '04/16/2023',
-        title: 'Architecture Approved',
-        status: 'DONE'
-      },
-      {
-        endDate: '04/16/2023',
-        title: 'Integration Testing'
-      },
-      {
-        endDate: '04/16/2023',
-        title: 'Go Live',
-        status: 'IMPACTED'
-      }]}
-      onMilestoneClick={() => alert()}
+        // onExpanderClick={handleExpanderClick}
+        milestones={[{
+          endDate: '04/16/2023',
+          title: 'Development Start'
+        },
+        {
+          endDate: '04/16/2023',
+          title: 'Architecture Approved'
+        },
+        {
+          endDate: '04/16/2023',
+          title: 'Integration Testing'
+        },
+        {
+          endDate: '04/16/2023',
+          title: 'Go Live'
+        }]}
+        onMilestoneClick={() => alert()}
+        onStageRowClick={(tasl) => alert(tasl)}
       />
     </div>
   );
