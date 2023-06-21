@@ -11,6 +11,7 @@ export type GridBodyProps = {
   columnWidth: number;
   todayColor: string;
   rtl: boolean;
+  onStageRowClick?: (item: Task) => void;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
   tasks,
@@ -20,6 +21,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
   columnWidth,
   todayColor,
   rtl,
+  onStageRowClick
 }) => {
   let y = 0;
   const gridRows: ReactChild[] = [];
@@ -33,6 +35,13 @@ export const GridBody: React.FC<GridBodyProps> = ({
       className={styles.gridRowLine}
     />,
   ];
+
+  const handleOnStageRowClick = (task: Task) => {
+    if (onStageRowClick) {
+      onStageRowClick(task)
+    }
+  };
+
   for (const task of tasks) {
     gridRows.push(
       <rect
@@ -42,6 +51,8 @@ export const GridBody: React.FC<GridBodyProps> = ({
         width={svgWidth}
         height={rowHeight}
         className={styles.gridRow}
+        cursor="pointer"
+        onClick={() => handleOnStageRowClick(task)}
       />
     );
     rowLines.push(
