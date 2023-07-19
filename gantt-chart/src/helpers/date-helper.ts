@@ -1,4 +1,4 @@
-import { CalendarDateRange, CalendarRanges } from "../types/date-setup";
+import { CalendarDateRange } from "../types/date-setup";
 import { Task, ViewMode } from "../types/public-types";
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
@@ -147,26 +147,11 @@ export const seedDates = (
   startDate: Date,
   endDate: Date,
   viewMode: ViewMode,
-  calendarRanges: CalendarRanges
 ) => {
   let currentDate: Date = new Date(startDate);
   const ranges:CalendarDateRange[] = [{startDate: currentDate, endDate: currentDate, sprint: ''}];
-  
+
   const dates: Date[] = [currentDate];
-
-  if(viewMode === ViewMode.Range) {
-
-    Object.keys(calendarRanges.ranges || {}).forEach((sprint) => {
-      const startDate = new Date(calendarRanges.ranges?.[sprint].startDate || '');
-      const endDate = new Date(calendarRanges.ranges?.[sprint].endDate || '');
-      ranges.push({startDate, endDate, sprint});
-      dates.push(startDate);
-    });
-    const emptyColumn = { startDate: addToDate(ranges[ranges.length - 1].startDate, 7, "day"), endDate: addToDate(ranges[ranges.length - 1].endDate, 7, "day"), sprint: ''};
-
-    ranges.push(emptyColumn);
-    dates.push(emptyColumn.startDate);
-  } else {
 
     while (currentDate < endDate) {
       switch (viewMode) {
@@ -191,9 +176,11 @@ export const seedDates = (
         case ViewMode.Hour:
           currentDate = addToDate(currentDate, 1, "hour");
           break;
+          case ViewMode.Range:
+            currentDate = addToDate(currentDate, 1, "day");
+            break;
       }
       dates.push(currentDate);
-    }
   }
   return { dates, ranges };
 };
