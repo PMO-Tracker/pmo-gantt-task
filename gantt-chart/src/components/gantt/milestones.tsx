@@ -35,7 +35,7 @@ export const Milestones: React.FC<Milestones> = ({
                 milestones.map((milestone) => (
                     <div
                         style={{
-                            width: columnWidth,
+                            width: '240px',
                             height: '100%',
                             display: 'flex',
                             flexDirection: 'column',

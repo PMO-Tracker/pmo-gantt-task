@@ -32,6 +32,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   columnWidth,
   fontFamily,
   fontSize,
+  calendarRanges
 }) => {
   const getCalendarValuesForYear = () => {
     const topValues: ReactChild[] = [];
@@ -124,36 +125,46 @@ export const Calendar: React.FC<CalendarProps> = ({
   const getCalendarValuesByRange = () => {
     const topValues: ReactChild[] = [];
     const bottomValues: ReactChild[] = [];
-    for (let i = 0; i < dateSetup.dates.length; i++) {
-      // const startDate = dateSetup.ranges[i].startDate.getDate();
-      const startDate = `${dateSetup.ranges[i].startDate.getDate()} ${getLocaleMonth(dateSetup.ranges[i].startDate, locale).substring(0,3)}`
-      const endDate = `${dateSetup.ranges[i].endDate.getDate()} ${getLocaleMonth(dateSetup.ranges[i].endDate, locale).substring(0,3)}`;
+    const dates = dateSetup.dates;
+    const ranges = calendarRanges.ranges || {};
+    const midRanges = Object.keys(ranges).map((key: any) => {
+      return {
+        date: (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2)),
+        sprint: key
+      }
+    })
 
-      const sprint = dateSetup.ranges[i].sprint;
-      const rangeToShow = `${startDate} - ${endDate}`;
-      bottomValues.push(
-      <React.Fragment  key={`sprint-${rangeToShow}`}>
-        <text
-          y={headerHeight * 0.4}
-          x={columnWidth * i + columnWidth * 0.5}
-          className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
-        >
-          {sprint}
-        </text>
-        {sprint && (
-        <text
-          key={rangeToShow}
-          y={headerHeight * 0.8}
-          x={columnWidth * i + columnWidth * 0.5}
-          className={styles.calendarBottomText}
-        >
-          {rangeToShow}
-        </text>
-        )}
-        </React.Fragment>
-      );
+    let tickX = 0;
+
+    for (let i = 0; i < dates.length; i++) {
+      tickX += columnWidth;
+      const isDateMatched = midRanges.find(range => new Date(range.date.getFullYear(), range.date.getMonth(), range.date.getDate()).getTime() === new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime());
+
+      if (isDateMatched) {
+        const rangeToShow = `${ranges[isDateMatched.sprint].startDate} - ${ranges[isDateMatched.sprint].endDate}`;
+        topValues.push(
+          <React.Fragment key={`sprint-${rangeToShow}`}>
+            <text
+              y={headerHeight * 0.4}
+              x={tickX}
+              className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
+            >
+              {isDateMatched.sprint}
+            </text>
+            {isDateMatched.sprint && (
+              <text
+                key={rangeToShow}
+                y={headerHeight * 0.8}
+                x={tickX}
+                className={styles.calendarBottomText}
+              >
+                {rangeToShow}
+              </text>
+            )}
+          </React.Fragment>
+        );
+      }
     }
-
     return [topValues, bottomValues];
   };
 
