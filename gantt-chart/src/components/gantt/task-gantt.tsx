@@ -30,7 +30,7 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   const verticalGanttContainerRef = useRef<HTMLDivElement>(null);
   const newBarProps = { ...barProps, svg: ganttSVGRef };
-  const milestoneProps = { height: calendarProps.headerHeight, width: gridProps.svgWidth, columnWidth: calendarProps.columnWidth , milestones, onMilestoneClick };
+  const milestoneProps = { height: calendarProps.headerHeight, width: gridProps.svgWidth , milestones, onMilestoneClick };
 
   useEffect(() => {
     if (horizontalContainerRef.current) {
