@@ -127,22 +127,32 @@ export const Calendar: React.FC<CalendarProps> = ({
     const bottomValues: ReactChild[] = [];
     const dates = dateSetup.dates;
     const ranges = calendarRanges.ranges || {};
-    const midRanges = Object.keys(ranges).map((key: any) => {
-      return {
-        date: (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2)),
+    let midRanges = {};
+    Object.keys(ranges).forEach((key: any) => {
+      const midRange = (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2));
+      const midRangeTime = new Date(midRange.getFullYear(), midRange.getMonth(), midRange.getDate()).getTime();
+      midRanges[midRangeTime] = {
+        date: midRange,
         sprint: key
       }
     });
 
-    let midRangeIndex = 0;
+    // const midRanges = Object.keys(ranges).map((key: any) => {
+    //   return {
+    //     date: (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2)),
+    //     sprint: key
+    //   }
+    // });
+
     let tickX = 0;
 
     for (let i = 0; i < dates.length; i++) {
       tickX += columnWidth;
-      const isDateMatched = midRanges[midRangeIndex] && new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime() === new Date(midRanges[midRangeIndex].date.getFullYear(), midRanges[midRangeIndex].date.getMonth(), midRanges[midRangeIndex].date.getDate()).getTime();
+      const currentDateTime = new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime();
+      const matchedDateRange = midRanges[currentDateTime];
 
-      if (isDateMatched) {
-        const rangeToShow = `${ranges[midRanges[midRangeIndex].sprint].startDate} - ${ranges[midRanges[midRangeIndex].sprint].endDate}`;
+      if (matchedDateRange) {
+        const rangeToShow = `${ranges[matchedDateRange.sprint].startDate} - ${ranges[matchedDateRange.sprint].endDate}`;
         topValues.push(
           <React.Fragment key={`sprint-${rangeToShow}`}>
             <text
@@ -150,7 +160,7 @@ export const Calendar: React.FC<CalendarProps> = ({
               x={tickX}
               className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
             >
-              {midRanges[midRangeIndex].sprint}
+              {matchedDateRange.sprint}
             </text>
             <text
               key={rangeToShow}
@@ -162,8 +172,6 @@ export const Calendar: React.FC<CalendarProps> = ({
             </text>
           </React.Fragment>
         );
-
-        midRangeIndex++
       }
     }
     return [topValues, bottomValues];
