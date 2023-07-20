@@ -132,16 +132,17 @@ export const Calendar: React.FC<CalendarProps> = ({
         date: (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2)),
         sprint: key
       }
-    })
+    });
 
+    let midRangeIndex = 0;
     let tickX = 0;
 
     for (let i = 0; i < dates.length; i++) {
       tickX += columnWidth;
-      const isDateMatched = midRanges.find(range => new Date(range.date.getFullYear(), range.date.getMonth(), range.date.getDate()).getTime() === new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime());
+      const isDateMatched = midRanges[midRangeIndex] && new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime() === new Date(midRanges[midRangeIndex].date.getFullYear(), midRanges[midRangeIndex].date.getMonth(), midRanges[midRangeIndex].date.getDate()).getTime();
 
       if (isDateMatched) {
-        const rangeToShow = `${ranges[isDateMatched.sprint].startDate} - ${ranges[isDateMatched.sprint].endDate}`;
+        const rangeToShow = `${ranges[midRanges[midRangeIndex].sprint].startDate} - ${ranges[midRanges[midRangeIndex].sprint].endDate}`;
         topValues.push(
           <React.Fragment key={`sprint-${rangeToShow}`}>
             <text
@@ -149,20 +150,20 @@ export const Calendar: React.FC<CalendarProps> = ({
               x={tickX}
               className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
             >
-              {isDateMatched.sprint}
+              {midRanges[midRangeIndex].sprint}
             </text>
-            {isDateMatched.sprint && (
-              <text
-                key={rangeToShow}
-                y={headerHeight * 0.8}
-                x={tickX}
-                className={styles.calendarBottomText}
-              >
-                {rangeToShow}
-              </text>
-            )}
+            <text
+              key={rangeToShow}
+              y={headerHeight * 0.8}
+              x={tickX}
+              className={styles.calendarBottomText}
+            >
+              {rangeToShow}
+            </text>
           </React.Fragment>
         );
+
+        midRangeIndex++
       }
     }
     return [topValues, bottomValues];
@@ -254,8 +255,8 @@ export const Calendar: React.FC<CalendarProps> = ({
             xText={
               columnWidth * (i + 1) -
               getDaysInMonth(date.getMonth(), date.getFullYear()) *
-                columnWidth *
-                0.5
+              columnWidth *
+              0.5
             }
             yText={topDefaultHeight * 0.9}
           />
@@ -365,9 +366,9 @@ export const Calendar: React.FC<CalendarProps> = ({
       [topValues, bottomValues] = getCalendarValuesForYear();
       break;
     case ViewMode.Month:
-        [topValues, bottomValues] = getCalendarValuesForMonth();
-        break;
-      case ViewMode.Week:
+      [topValues, bottomValues] = getCalendarValuesForMonth();
+      break;
+    case ViewMode.Week:
       [topValues, bottomValues] = getCalendarValuesForWeek();
       break;
     case ViewMode.Day:
@@ -380,8 +381,8 @@ export const Calendar: React.FC<CalendarProps> = ({
     case ViewMode.Hour:
       [topValues, bottomValues] = getCalendarValuesForHour();
     case ViewMode.Range:
-        [topValues, bottomValues] = getCalendarValuesByRange();
-        break;
+      [topValues, bottomValues] = getCalendarValuesByRange();
+      break;
   }
   return (
     <g className="calendar" fontSize={fontSize} fontFamily={fontFamily}>

@@ -6,7 +6,6 @@ export type Milestones = {
     milestones: TableMilestones[],
     height: number,
     width: number,
-    columnWidth: number,
     onMilestoneClick: (item: TableMilestones) => void;
 };
 
@@ -20,7 +19,6 @@ export const Milestones: React.FC<Milestones> = ({
     milestones,
     height,
     width,
-    columnWidth,
     onMilestoneClick
 }) => {
 
@@ -30,7 +28,6 @@ export const Milestones: React.FC<Milestones> = ({
                 height,
                 width
             }}>
-            <div style={{ width: columnWidth }} />
             {
                 milestones.map((milestone) => (
                     <div
