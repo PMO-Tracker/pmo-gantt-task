@@ -29,8 +29,7 @@ function initTasks() {
       ),
       id: "Task 0wiepoqwei",
       // progress: 45,
-      type: "task",
-      project: "ProjectSample",
+      type: "project",
       displayOrder: 1,
       team: "asdasdas",
       styles: {
@@ -38,6 +37,7 @@ function initTasks() {
       },
       stageName: "Discussion with teamoooo",
       outlook: 'gray',
+      hideChildren: false
     },
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 16),
@@ -45,15 +45,13 @@ function initTasks() {
       id: "Task 1xmznbcnmzxn",
       // dependencies: ["Task 0"],
       type: "task",
-      project: "ProjectSample",
+      project: "Task 0wiepoqwei",
       displayOrder: 2,
       styles: {
         backgroundColor: '#12B76A'
       },
       stageName: "Discussion with teamllllll",
       outlook: 'green'
-
-
     },
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
@@ -135,7 +133,7 @@ function initTasks() {
       id: "Task 0qweqweqweqw",
       // progress: 45,
       type: "task",
-      project: "ProjectSample",
+      project: undefined,
       displayOrder: 2,
       team: "asdasdas",
       styles: {
@@ -178,6 +176,43 @@ function App() {
     console.log(itemToAdd, '=====>>>')
   };
 
+   const getStartEndDateForProject = (tasks: Task[], projectId: string) => {
+    const projectTasks = tasks.filter(t => t.project === projectId);
+    let start = projectTasks[0].start;
+    let end = projectTasks[0].end;
+  
+    for (let i = 0; i < projectTasks.length; i++) {
+      const task = projectTasks[i];
+      if (start.getTime() > task.start.getTime()) {
+        start = task.start;
+      }
+      if (end.getTime() < task.end.getTime()) {
+        end = task.end;
+      }
+    }
+    return [start, end];
+  }
+
+  const handleTaskChange = (task: Task) => {
+    console.log("On date change Id:" , task);
+    let newTasks = tasks.map(t => (t.id === task.id ? task : t));
+    if (task.project) {
+      const [start, end] = getStartEndDateForProject(newTasks, task.project);
+      const project = newTasks[newTasks.findIndex(t => t.id === task.project)];
+      if (
+        project.start.getTime() !== start.getTime() ||
+        project.end.getTime() !== end.getTime()
+      ) {
+        const changedProject = { ...project, start, end };
+        newTasks = newTasks.map(t =>
+          t.id === task.project ? changedProject : t
+        );
+      }
+    }
+    setTasks(newTasks);
+  };
+
+
   return (
     <div style={{ margin: '20px', textAlign: 'center', border: '1px solid #F2F4F7', borderRadius: '8px' }}>
       <Gantt
@@ -214,7 +249,7 @@ function App() {
         // barBackgroundColor='#F04438'
         headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true }]}
         addRecord={handleAddRecord}
-        // onExpanderClick={handleExpanderClick}
+        onExpanderClick={handleExpanderClick}
         milestones={[{
           endDate: '04/16/2023',
           title: 'Development Start'
@@ -233,7 +268,7 @@ function App() {
         }]}
         onMilestoneClick={() => alert()}
         onStageRowClick={(tasl) => alert(tasl)}
-        onDateChange={(task) =>{console.log(task,'datechangedatechange')}}
+        onDateChange={handleTaskChange}
       />
     </div>
   );
