@@ -18,6 +18,12 @@
   color:#667085;
   font-size: 14px;
 }
+
+.expanderCell {
+display: flex;
+align-items: center;
+justify-content: center;
+}
 .taskListCell a {
   cursor: pointer;
   color: rgb(62, 121, 247);
