@@ -78,7 +78,7 @@ export const TaskListTableDefault: React.FC<{
                   if (rowItemIndex === 0 && onExpanderClick) {
                     return (
                       <div
-                        className={`${styles.taskListCell} ${styles.taskListCursorPointer}`}
+                        className={`${expanderSymbol ? styles.expanderCell : ''} ${styles.taskListCell} ${styles.taskListCursorPointer}`}
                         style={{
                           minWidth: rowWidth,
                           maxWidth: rowWidth,
@@ -87,7 +87,6 @@ export const TaskListTableDefault: React.FC<{
                         key={`${t.id}-first-row-${t[rowItem.key]}`}
                         onClick={() => onRowClick(t)}
                       >
-                        <div className={styles.taskListNameWrapper}>
                           <div
                             className={
                               expanderSymbol
@@ -99,7 +98,6 @@ export const TaskListTableDefault: React.FC<{
                             {expanderSymbol}
                           </div>
                           <div>{t[rowItem.key] ? t[rowItem.key] : rowItem.showAddButton ? <a onClick={() => addRecord(rowItem.key)}>{`Add ${rowItem.title}`}</a> : ''}</div>
-                        </div>
                       </div>
                     )
                   } else {
