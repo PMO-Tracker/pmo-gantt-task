@@ -124,11 +124,11 @@ function initTasks() {
     },
     {
       // Task
-      start: new Date(currentDate.getFullYear(), 3, 2),
+      start: new Date(currentDate.getFullYear(), 2, 2),
       end: new Date(
         currentDate.getFullYear(),
         3,
-        10
+        2
       ),
       id: "Task 0qweqweqweqw",
       // progress: 45,
@@ -143,21 +143,7 @@ function initTasks() {
       outlook: 'gray'
 
     },
-    {
-      start: new Date(currentDate.getFullYear(), 0, 10),
-      end: new Date(currentDate.getFullYear(), 0, 1),
-      stageName: "---",
-      id: "Task 2qwpoeipoqwie",
-      // dependencies: ["Task 1"],
-      type: "task",
-      project: "ProjectSample",
-      displayOrder: 4,
-      styles: {
-        backgroundColor: '#F04438'
-      },
-      outlook: 'red'
-
-    },
+   
   ];
   return tasks;
 }
