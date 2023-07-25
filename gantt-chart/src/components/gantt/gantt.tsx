@@ -76,7 +76,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLDivElement>(null);
   const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
-    const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount);
+    const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount, ranges);
     const { dates, ranges: dateRanges } = seedDates(startDate, endDate, viewMode);
     return { viewMode, dates, ranges: dateRanges };
   });
@@ -118,7 +118,8 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     const [startDate, endDate] = ganttDateRange(
       filteredTasks,
       viewMode,
-      preStepsCount
+      preStepsCount,
+      ranges
     );
     let { dates: newDates, ranges: dateRanges } = seedDates(startDate, endDate, viewMode);
 
