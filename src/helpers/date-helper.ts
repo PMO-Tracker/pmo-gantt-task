@@ -1,4 +1,4 @@
-import { CalendarDateRange } from "../types/date-setup";
+import { CalendarDateRange, CalendarRanges } from "../types/date-setup";
 import { Task, ViewMode } from "../types/public-types";
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
 import DateTimeFormat = Intl.DateTimeFormat;
@@ -73,18 +73,27 @@ export const startOfDate = (date: Date, scale: DateHelperScales) => {
 export const ganttDateRange = (
   tasks: Task[],
   viewMode: ViewMode,
-  preStepsCount: number
+  preStepsCount: number,
+  ranges: CalendarRanges
 ) => {
-  let newStartDate: Date = tasks[0].start;
-  let newEndDate: Date = tasks[0].start;
-  for (const task of tasks) {
-    if (task.start < newStartDate) {
-      newStartDate = task.start;
+  const isRangeView = viewMode === ViewMode.Range;
+
+  let newStartDate: Date = isRangeView && Object.keys(ranges).length ? new Date(ranges[Object.keys(ranges)[0]].startDate)
+  : tasks[0].start;
+  let newEndDate: Date = isRangeView && Object.keys(ranges).length ? new Date(ranges[Object.keys(ranges)[Object.keys(ranges).length - 1]].endDate)
+  : tasks[0].end;
+
+  if (!isRangeView) {
+    for (const task of tasks) {
+      if (task.start < newStartDate) {
+        newStartDate = task.start;
+      }
+      if (task.end > newEndDate) {
+        newEndDate = task.end;
+      }
     }
-    if (task.end > newEndDate) {
-      newEndDate = task.end;
-    }
-  }
+  };
+  
   switch (viewMode) {
     case ViewMode.Year:
       newStartDate = addToDate(newStartDate, -1, "year");
@@ -137,7 +146,7 @@ export const ganttDateRange = (
       newStartDate = addToDate(newStartDate, -1 * preStepsCount, "day");
       newEndDate = startOfDate(newEndDate, "day");
       newEndDate = addToDate(newEndDate, 19, "day");
-        break;
+      break;
   };
 
   return [newStartDate, newEndDate];
@@ -149,38 +158,38 @@ export const seedDates = (
   viewMode: ViewMode,
 ) => {
   let currentDate: Date = new Date(startDate);
-  const ranges:CalendarDateRange[] = [{startDate: currentDate, endDate: currentDate, sprint: ''}];
+  const ranges: CalendarDateRange[] = [{ startDate: currentDate, endDate: currentDate, sprint: '' }];
 
   const dates: Date[] = [currentDate];
 
-    while (currentDate < endDate) {
-      switch (viewMode) {
-        case ViewMode.Year:
-          currentDate = addToDate(currentDate, 1, "year");
-          break;
-        case ViewMode.Month:
-          currentDate = addToDate(currentDate, 1, "month");
-          break;
-        case ViewMode.Week:
-          currentDate = addToDate(currentDate, 7, "day");
-          break;
-        case ViewMode.Day:
-          currentDate = addToDate(currentDate, 1, "day");
-          break;
-        case ViewMode.HalfDay:
-          currentDate = addToDate(currentDate, 12, "hour");
-          break;
-        case ViewMode.QuarterDay:
-          currentDate = addToDate(currentDate, 6, "hour");
-          break;
-        case ViewMode.Hour:
-          currentDate = addToDate(currentDate, 1, "hour");
-          break;
-          case ViewMode.Range:
-            currentDate = addToDate(currentDate, 1, "day");
-            break;
-      }
-      dates.push(currentDate);
+  while (currentDate < endDate) {
+    switch (viewMode) {
+      case ViewMode.Year:
+        currentDate = addToDate(currentDate, 1, "year");
+        break;
+      case ViewMode.Month:
+        currentDate = addToDate(currentDate, 1, "month");
+        break;
+      case ViewMode.Week:
+        currentDate = addToDate(currentDate, 7, "day");
+        break;
+      case ViewMode.Day:
+        currentDate = addToDate(currentDate, 1, "day");
+        break;
+      case ViewMode.HalfDay:
+        currentDate = addToDate(currentDate, 12, "hour");
+        break;
+      case ViewMode.QuarterDay:
+        currentDate = addToDate(currentDate, 6, "hour");
+        break;
+      case ViewMode.Hour:
+        currentDate = addToDate(currentDate, 1, "hour");
+        break;
+      case ViewMode.Range:
+        currentDate = addToDate(currentDate, 1, "day");
+        break;
+    }
+    dates.push(currentDate);
   }
   return { dates, ranges };
 };
