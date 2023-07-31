@@ -51,7 +51,8 @@ function initTasks() {
         backgroundColor: '#12B76A'
       },
       stageName: "Discussion with teamllllll",
-      outlook: 'green'
+      outlook: 'green',
+      subStageName: <h1>asdasd</h1>
     },
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
@@ -219,7 +220,7 @@ function App() {
         tasks={tasks}
         viewMode={ViewMode.Range}
         fontFamily="Consolas, Monaco, 'Andale Mono', monospace"
-        columnWidth={20}
+        columnWidth={25}
         headerHeight={64}
         listCellWidth='200px'
         onRowClick={handlRowClick}
@@ -247,7 +248,7 @@ function App() {
         }}
         barFill={46}
         // barBackgroundColor='#F04438'
-        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true }]}
+        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true }, { key: 'subStageName', title: 'Substage' }]}
         addRecord={handleAddRecord}
         onExpanderClick={handleExpanderClick}
         milestones={[{
@@ -269,6 +270,7 @@ function App() {
         onMilestoneClick={() => alert()}
         onStageRowClick={(tasl) => alert(tasl)}
         onDateChange={handleTaskChange}
+        handleWidth={5}
       />
     </div>
   );

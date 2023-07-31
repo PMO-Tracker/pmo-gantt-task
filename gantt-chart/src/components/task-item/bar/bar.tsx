@@ -19,7 +19,7 @@ export const Bar: React.FC<TaskItemProps> = ({
     task.y,
     task.height
   );
-  const handleHeight = task.height - 2;
+  const handleHeight = task.height - 6;
   return (
     <g className={styles.barWrapper} tabIndex={0}>
       <BarDisplay
@@ -42,7 +42,7 @@ export const Bar: React.FC<TaskItemProps> = ({
             {/* left */}
             <BarDateHandle
               x={task.x1 + 1}
-              y={task.y + 1}
+              y={task.y + 3}
               width={task.handleWidth}
               height={handleHeight}
               barCornerRadius={task.barCornerRadius}
@@ -53,7 +53,7 @@ export const Bar: React.FC<TaskItemProps> = ({
             {/* right */}
             <BarDateHandle
               x={task.x2 - task.handleWidth - 1}
-              y={task.y + 1}
+              y={task.y + 3}
               width={task.handleWidth}
               height={handleHeight}
               barCornerRadius={task.barCornerRadius}
