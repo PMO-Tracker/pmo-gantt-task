@@ -247,7 +247,15 @@ const convertToMilestone = (
 };
 
 const taskXCoordinate = (xDate: Date, dates: Date[], columnWidth: number) => {
-  const index = dates.findIndex(d => d.getTime() >= xDate.getTime()) - 1;
+  let index = dates.findIndex(d => d.getTime() >= xDate.getTime()) - 1;
+
+  if (index === -1) {
+    index = 0;
+  };
+
+  if (index === -2) {
+    index = dates.length - 2;
+  }
 
   const remainderMillis = xDate?.getTime() - dates[index]?.getTime();
   const percentOfInterval =
@@ -373,7 +381,7 @@ const dateByX = (
   let newDate = new Date(((x - taskX) / xStep) * timeStep + taskDate.getTime());
   newDate = new Date(
     newDate.getTime() +
-      (newDate.getTimezoneOffset() - taskDate.getTimezoneOffset()) * 60000
+    (newDate.getTimezoneOffset() - taskDate.getTimezoneOffset()) * 60000
   );
   return newDate;
 };
