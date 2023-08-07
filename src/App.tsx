@@ -37,7 +37,8 @@ function initTasks() {
       },
       stageName: "Discussion with teamoooo",
       outlook: 'gray',
-      hideChildren: false
+      hideChildren: false,
+      progressWidth: 0
     },
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 16),
@@ -52,7 +53,7 @@ function initTasks() {
       },
       stageName: "Discussion with teamllllll",
       outlook: 'green',
-      subStageName: <h1>asdasd</h1>
+      // subStageName: <h1>asdasd</h1>
     },
     {
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
@@ -61,12 +62,13 @@ function initTasks() {
       id: "Task 2=======>>>",
       // dependencies: ["Task 1"],
       type: "task",
-      project: "ProjectSample",
-      displayOrder: 4,
+      project: "Task 0wiepoqwei",
+            displayOrder: 4,
       styles: {
         backgroundColor: '#F04438'
       },
-      outlook: 'red'
+      outlook: 'red',
+      // subStageName: <h1>asdasd</h1>
 
     },
     {
@@ -88,8 +90,8 @@ function initTasks() {
       styles: {
         backgroundColor: '#667085'
       },
-      stageName: "asdasdas--->>>",
-      outlook: 'gray'
+      stageName: "Discussion with teamwwww",
+      outlook: 'green'
 
     },
     {
@@ -105,12 +107,10 @@ function initTasks() {
       },
       stageName: "Discussion with teamwwww",
       outlook: 'green'
-
-
     },
     {
-      start: new Date(currentDate.getFullYear(), 3, 8),
-      end: new Date(currentDate.getFullYear(), 3, 9),
+      start: new Date(currentDate.getFullYear(), 1, 31),
+      end: new Date(currentDate.getFullYear(), 5, 4),
       stageName: "Discussion with teampppp",
       id: "Task 2",
       // dependencies: ["Task 1"],
@@ -234,7 +234,7 @@ function App() {
         }}
         barFill={46}
         // barBackgroundColor='#F04438'
-        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook', bullet: true }, { key: 'subStageName', title: 'Substage' }]}
+        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook' }, { key: 'subStageName', title: 'Substage' }]}
         addRecord={handleAddRecord}
         onExpanderClick={handleExpanderClick}
         milestones={[{
