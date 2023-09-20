@@ -83,7 +83,6 @@ export const TaskListTableDefault: React.FC<{
                           minWidth: rowWidth,
                           maxWidth: rowWidth,
                         }}
-                        title={t[rowItem.key]}
                         key={`${t.id}-first-row-${t[rowItem.key]}`}
                         onClick={() => onRowClick(t)}
                       >
