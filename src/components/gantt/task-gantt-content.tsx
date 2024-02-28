@@ -55,6 +55,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
   onDoubleClick,
   onClick,
   onDelete,
+  onArrowDoubleClick
 }) => {
   const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
@@ -273,6 +274,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                 rowHeight={rowHeight}
                 taskHeight={taskHeight}
                 arrowIndent={arrowIndent}
+                onArrowDoubleClick={onArrowDoubleClick}
                 rtl={rtl}
               />
             );

@@ -3,7 +3,7 @@ import { GridProps, Grid } from "../grid/grid";
 import { CalendarProps, Calendar } from "../calendar/calendar";
 import { TaskGanttContentProps, TaskGanttContent } from "./task-gantt-content";
 import styles from "./gantt.module.css";
-import { TableMilestones } from "../../types/public-types";
+import { TableMilestones, Task } from "../../types/public-types";
 import { Milestones } from "./milestones";
 
 export type TaskGanttProps = {
@@ -15,6 +15,7 @@ export type TaskGanttProps = {
   scrollX: number;
   milestones: TableMilestones[],
   onMilestoneClick: (item: TableMilestones) => void;
+  onArrowDoubleClick?: (taskFrom: Task, taskTo: Task) => void;
 };
 export const TaskGantt: React.FC<TaskGanttProps> = ({
   gridProps,
