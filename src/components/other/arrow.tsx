@@ -1,5 +1,7 @@
 import React from "react";
 import { BarTask } from "../../types/bar-task";
+import { Task } from "../../types/public-types";
+import styles from "./arrow.module.css";
 
 type ArrowProps = {
   taskFrom: BarTask;
@@ -8,6 +10,7 @@ type ArrowProps = {
   taskHeight: number;
   arrowIndent: number;
   rtl: boolean;
+  onArrowDoubleClick?: (taskFrom: Task, taskTo: Task) => void;
 };
 export const Arrow: React.FC<ArrowProps> = ({
   taskFrom,
@@ -16,6 +19,7 @@ export const Arrow: React.FC<ArrowProps> = ({
   taskHeight,
   arrowIndent,
   rtl,
+  onArrowDoubleClick
 }) => {
   let path: string;
   let trianglePoints: string;
@@ -37,8 +41,14 @@ export const Arrow: React.FC<ArrowProps> = ({
     );
   }
 
+  const handleArrowDoubleClick = () => {
+    if(onArrowDoubleClick) {
+      onArrowDoubleClick(taskFrom, taskTo);
+    }
+  }
+
   return (
-    <g className="arrow">
+    <g className={`arrow ${styles.arrow_clickable}`} onDoubleClick={handleArrowDoubleClick}>
       <path strokeWidth="1.5" d={path} fill="none" />
       <polygon points={trianglePoints} />
     </g>
