@@ -6,19 +6,19 @@ import "./App.css";
 function initTasks() {
   const currentDate = new Date('01/01/2023');
   const tasks: any[] = [
-    // {
-    //   // Project
-    //   start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-    //   end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
-    //   id: "ProjectSample",
-    //   type: "project",
-    //   hideChildren: false,
-    //   displayOrder: 1,
-    //   team: 'sadasds',
-    //   styles: {
-    //     backgroundColor: '#F04438'
-    //   }
-    // },
+    {
+      // Project
+      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+      end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+      id: "ProjectSample",
+      type: "project",
+      hideChildren: false,
+      displayOrder: 1,
+      team: 'sadasds',
+      styles: {
+        backgroundColor: '#F04438'
+      }
+    },
     {
       // Task
       start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
@@ -106,7 +106,8 @@ function initTasks() {
         backgroundColor: '#12B76A'
       },
       stageName: "Discussion with teamwwww",
-      outlook: 'green'
+      outlook: 'green',
+      dependencies: ['Task 2']
     },
     {
       start: new Date(currentDate.getFullYear(), 1, 31),
@@ -125,10 +126,11 @@ function initTasks() {
     },
     {
       // Task
-      start: new Date(currentDate.getFullYear(), 2, 2),
+      start: new Date(currentDate.getFullYear(), 0, 2, 1),
       end: new Date(
         currentDate.getFullYear(),
-        3,
+        0,
+        2,
         2
       ),
       id: "Task 0qweqweqweqw",
@@ -141,7 +143,7 @@ function initTasks() {
         backgroundColor: '#667085'
       },
       stageName: "Discussion with team??",
-      outlook: 'gray'
+      outlook: 'gray',
 
     },
    
@@ -206,7 +208,7 @@ function App() {
         tasks={tasks}
         viewMode={ViewMode.Range}
         fontFamily="Consolas, Monaco, 'Andale Mono', monospace"
-        columnWidth={25}
+        columnWidth={20}
         headerHeight={64}
         listCellWidth='200px'
         onRowClick={handlRowClick}
@@ -254,9 +256,11 @@ function App() {
           title: 'Go Live'
         }]}
         onMilestoneClick={() => alert()}
-        onStageRowClick={(tasl) => alert(tasl)}
+        // onStageRowClick={(tasl) => alert(tasl)}
         onDateChange={handleTaskChange}
         handleWidth={5}
+        onArrowDoubleClick={() => alert()}
+        
       />
     </div>
   );

@@ -98,6 +98,7 @@ export interface EventOption {
   addRecord?: (item: string) => void;
   onMilestoneClick?: (item: TableMilestones) => void;
   onStageRowClick?: (item: Task) => void;
+  onArrowDoubleClick:  (taskFrom: Task, taskTo: Task) => void;
 }
 
 export interface DisplayOption {
