@@ -257,6 +257,7 @@ function App() {
         onStageRowClick={(tasl) => alert(tasl)}
         onDateChange={handleTaskChange}
         handleWidth={5}
+        onArrowDoubleClick={()=>alert()}
       />
     </div>
   );
