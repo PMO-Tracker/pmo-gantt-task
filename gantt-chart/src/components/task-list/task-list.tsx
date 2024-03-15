@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { BarTask } from "../../types/bar-task";
 import { TableHeader, TableMilestones, Task } from "../../types/public-types";
+import styles from "./task-list.module.css";
 
 export type TaskListProps = {
   headerHeight: number;
@@ -99,7 +100,7 @@ export const TaskList: React.FC<TaskListProps> = ({
   };
 
   return (
-    <div ref={taskListRef} className='task-list-header'>
+    <div ref={taskListRef} className={styles.taskListHeader}>
       <TaskListHeader {...headerProps} />
       <div
         ref={horizontalContainerRef}

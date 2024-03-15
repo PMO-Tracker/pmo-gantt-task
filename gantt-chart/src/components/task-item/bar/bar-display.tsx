@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./bar.module.css";
+import { lightenHexColor } from "../../../helpers/other-helper";
 
 type BarDisplayProps = {
   x: number;
@@ -41,6 +42,12 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
 
   return (
     <g onMouseDown={onMouseDown}>
+      <defs>
+     <linearGradient id={`gradient-${styles.backgroundColor}`} x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="30.27%" stop-color={lightenHexColor(styles.backgroundColor, 60)} />
+      <stop offset="104.59%" stop-color={styles.backgroundColor} />
+    </linearGradient>
+    </defs>
       <rect
         x={x}
         width={width}
@@ -48,7 +55,7 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill={styles.backgroundColor}
+        fill={`url(#gradient-${styles.backgroundColor})`}
         className={style.barBackground}
       />
       {/* <rect

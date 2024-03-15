@@ -1,6 +1,7 @@
 import React from "react";
 import { TaskItemProps } from "../task-item";
 import styles from "./project.module.css";
+import { lightenHexColor } from "../../../helpers/other-helper";
 
 export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
   const barColor = isSelected
@@ -11,27 +12,33 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
   //   : task.styles.progressColor;
   const projectWith = task.x2 - task.x1;
 
-  const projectLeftTriangle = [
-    task.x1,
-    task.y + task.height / 2 - 1,
-    task.x1,
-    task.y + task.height,
-    task.x1 + 15,
-    task.y + task.height / 2 - 1,
-  ].join(",");
-  const projectRightTriangle = [
-    task.x2,
-    task.y + task.height / 2 - 1,
-    task.x2,
-    task.y + task.height,
-    task.x2 - 15,
-    task.y + task.height / 2 - 1,
-  ].join(",");
+  // const projectLeftTriangle = [
+  //   task.x1,
+  //   task.y + task.height / 2 - 1,
+  //   task.x1,
+  //   task.y + task.height,
+  //   task.x1 + 15,
+  //   task.y + task.height / 2 - 1,
+  // ].join(",");
+  // const projectRightTriangle = [
+  //   task.x2,
+  //   task.y + task.height / 2 - 1,
+  //   task.x2,
+  //   task.y + task.height,
+  //   task.x2 - 15,
+  //   task.y + task.height / 2 - 1,
+  // ].join(",");
 
   return (
     <g tabIndex={0} className={styles.projectWrapper}>
+      <defs>
+     <linearGradient id={`gradient-${barColor}`} x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="30.27%" stop-color={lightenHexColor(barColor, 60)} />
+      <stop offset="104.59%" stop-color={barColor} />
+    </linearGradient>
+    </defs>
       <rect
-        fill={barColor}
+     fill={`url(#gradient-${barColor})`}
         x={task.x1}
         width={projectWith}
         y={task.y}
@@ -49,7 +56,7 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
         rx={task.barCornerRadius}
         fill={processColor}
       /> */}
-      <rect
+      {/* <rect
         fill={barColor}
         x={task.x1}
         width={projectWith}
@@ -68,7 +75,7 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
         className={styles.projectTop}
         points={projectRightTriangle}
         fill={barColor}
-      />
+      /> */}
     </g>
   );
 };

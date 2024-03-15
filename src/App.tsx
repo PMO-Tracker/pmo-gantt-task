@@ -4,148 +4,312 @@ import { useState } from "react";
 import "./App.css";
 
 function initTasks() {
-  const currentDate = new Date('01/01/2023');
-  const tasks: any[] = [
-    // {
-    //   // Project
-    //   start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-    //   end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
-    //   id: "ProjectSample",
-    //   type: "project",
-    //   hideChildren: false,
-    //   displayOrder: 1,
-    //   team: 'sadasds',
-    //   styles: {
-    //     backgroundColor: '#F04438'
-    //   }
-    // },
+  const tasks : any [] = [
     {
-      // Task
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-      end: new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        15,
-      ),
-      id: "Task 0wiepoqwei",
-      // progress: 45,
-      type: "project",
-      displayOrder: 1,
-      team: "asdasdas",
+      start:  new Date('2024-02-14'),
+      end: new Date('2024-04-23'),
+      id: 'Development',
+      theme: '',
+      stageName: 'Development',
+      hideChildren: true,
+      team: '',
+      type: 'project',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: null,
       styles: {
-        backgroundColor: '#12B76A'
+        backgroundColor: '#673ab7'
       },
-      stageName: "Discussion with teamoooo",
-      outlook: 'gray',
-      hideChildren: false,
-      progressWidth: 0
+      barText: '6 Sub Stage'
     },
     {
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 16),
-      end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 30),
-      id: "Task 1xmznbcnmzxn",
-      // dependencies: ["Task 0"],
-      type: "task",
-      project: "Task 0wiepoqwei",
-      displayOrder: 2,
+      start:  new Date('2024-02-29'),
+      end:  new Date('2024-03-25'),
+      id: 'Development-Back-end development',
+      theme: '',
+      subStageName: 'Back-end development',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
       styles: {
-        backgroundColor: '#12B76A'
+        backgroundColor: '#8bc34a'
       },
-      stageName: "Discussion with teamllllll",
-      outlook: 'green',
-      // subStageName: <h1>asdasd</h1>
+      barText: null
     },
     {
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 4),
-      end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 25, 0, 0),
-      stageName: "Discussion with teamzzz",
-      id: "Task 2=======>>>",
-      // dependencies: ["Task 1"],
-      type: "task",
-      project: "Task 0wiepoqwei",
-            displayOrder: 4,
+      start:  new Date('2024-03-02'),
+      end:  new Date('2024-03-17'),
+      id: 'Development-Designing the solution architecture',
+      theme: '',
+      subStageName: 'Designing the solution architecture',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
       styles: {
-        backgroundColor: '#F04438'
+        backgroundColor: '#795548'
       },
-      outlook: 'red',
-      // subStageName: <h1>asdasd</h1>
+      barText: null
+    },
+    {
+      start:  new Date('2024-02-14'),
+      end:  new Date('2024-02-29'),
+      id: 'Development-Front-end development',
+      theme: '',
+      subStageName: 'Front-end development',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
+      styles: {
+        backgroundColor: '#673ab7'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-03-07'),
+      end: new Date('2024-03-20'),
+      id: 'Development-Database design and implementation',
+      theme: '',
+      subStageName: 'Database design and implementation',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
+      styles: {
+        backgroundColor: '#8bc34a'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-03-19') ,
+      end:  new Date('2024-03-26') ,
+      id: 'Development-Infrastructure Setup',
+      theme: '',
+      subStageName: 'Infrastructure Setup',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [
+        'Development-Back-end development'
+      ],
+      originalDependencies: [
+        {
+          stageName: 'Back-end development',
+          percentage: 100,
+          startDate: '13-03-2024',
+          endDate: '27-03-2024'
+        }
+      ],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
+      styles: {
+        backgroundColor: '#00bcd4'
+      },
+      barText: null
+    },
+    {
+      start:   new Date('2024-04-15'),
+      end:   new Date('2024-04-23'),
+      id: 'Development-Integration of external systems',
+      theme: '',
+      subStageName: 'Integration of external systems',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Development',
+      styles: {
+        backgroundColor: '#00bcd4'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-02-29'),
+      end:   new Date('2024-03-31'),
+      id: 'Go Live',
+      theme: '',
+      stageName: 'Go Live',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: null,
+      styles: {
+        backgroundColor: '#e91e63'
+      },
+      barText: null
+    },
+    {
+      start:   new Date('2024-02-07'),
+      end:  new Date('2024-02-23'),
+      id: 'new onee',
+      theme: '',
+      stageName: 'new onee',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: null,
+      styles: {
+        backgroundColor: '#03a9f4'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-03-11'),
+      end:  new Date('2024-04-22'),
+      id: 'Test 1044',
+      theme: '',
+      stageName: 'Test 1044',
+      hideChildren: true,
+      team: '',
+      type: 'project',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: null,
+      styles: {
+        backgroundColor: '#03a9f4'
+      },
+      barText: '4 Sub Stage'
+    },
+    {
+      start:  new Date('2024-03-12'),
+      end:  new Date('2024-03-20'),
+      id: 'Test 1044-test 1',
+      theme: '',
+      subStageName: 'test 1',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Test 1044',
+      styles: {
+        backgroundColor: '#3f51b5'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-03-11'),
+      end:   new Date('2024-03-20'),
+      id: 'Test 1044-test 5',
+      theme: '',
+      subStageName: 'test 5',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Test 1044',
+      styles: {
+        backgroundColor: '#e91e63'
+      },
+      barText: null
+    },
+    {
+      start:  new Date('2024-03-12'),
+      end:  new Date('2024-03-21'),
+      id: 'Test 1044-test 2',
+      theme: '',
+      subStageName: 'test 2',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Test 1044',
+      styles: {
+        backgroundColor: '#9c27b0'
+      },
+      barText: null
+    },
+    {
+      start: new Date('2024-03-31'),
+      end: new Date('2024-04-22'),
+      id: 'Test 1044-test 3',
+      theme: '',
+      subStageName: 'test 3',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [],
+      originalDependencies: [],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: 'Test 1044',
+      styles: {
+        backgroundColor: '#673ab7'
+      },
+      barText: null
+    },
+    {
+      start: new Date('2024-04-14'),
+      end: new Date('2024-04-22'),
+      id: 'Discovery',
+      theme: '',
+      stageName: 'Discovery',
+      hideChildren: true,
+      team: '',
+      type: 'task',
+      dependencies: [
+        'Development'
+      ],
+      originalDependencies: [
+        {
+          stageName: 'Development',
+          percentage: 100,
+          startDate: '13-03-2024',
+          endDate: '27-03-2024'
+        }
+      ],
+      jiraEpic: '',
+      barBackgroundColor: '#ffbb54',
+      project: null,
+      styles: {
+        backgroundColor: '#00bcd4'
+      },
+      barText: null
+    }
+  ];;
 
-    },
-    {
-      // Task
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-      end: new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        20,
-        12,
-        28
-      ),
-      id: "Task 0asdas",
-      // progress: 45,
-      type: "task",
-      project: "ProjectSample",
-      displayOrder: 2,
-      team: "asdasdas--->>>",
-      styles: {
-        backgroundColor: '#667085'
-      },
-      stageName: "Discussion with teamwwww",
-      outlook: 'green'
-
-    },
-    {
-      start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 2),
-      end: new Date(currentDate.getFullYear(), 1, 20, 10, 0),
-      id: "Task 1",
-      // dependencies: ["Task 0"],
-      type: "task",
-      project: "ProjectSample",
-      displayOrder: 3,
-      styles: {
-        backgroundColor: '#12B76A'
-      },
-      stageName: "Discussion with teamwwww",
-      outlook: 'green'
-    },
-    {
-      start: new Date(currentDate.getFullYear(), 1, 31),
-      end: new Date(currentDate.getFullYear(), 5, 4),
-      stageName: "Discussion with teampppp",
-      id: "Task 2",
-      // dependencies: ["Task 1"],
-      type: "task",
-      project: "ProjectSample",
-      displayOrder: 4,
-      styles: {
-        backgroundColor: '#F04438'
-      },
-      outlook: 'red'
-
-    },
-    {
-      // Task
-      start: new Date(currentDate.getFullYear(), 2, 2),
-      end: new Date(
-        currentDate.getFullYear(),
-        3,
-        2
-      ),
-      id: "Task 0qweqweqweqw",
-      // progress: 45,
-      type: "task",
-      project: undefined,
-      displayOrder: 2,
-      team: "asdasdas",
-      styles: {
-        backgroundColor: '#667085'
-      },
-      stageName: "Discussion with team??",
-      outlook: 'gray'
-
-    },
-   
-  ];
   return tasks;
 }
 function App() {
@@ -201,58 +365,170 @@ function App() {
 
 
   return (
-    <div style={{ margin: '20px', textAlign: 'center', border: '1px solid #F2F4F7', borderRadius: '8px' }}>
+    <div style={{ margin: '20px', textAlign: 'center'}}>
       <Gantt
         tasks={tasks}
         viewMode={ViewMode.Range}
         fontFamily="Consolas, Monaco, 'Andale Mono', monospace"
-        columnWidth={25}
+        columnWidth={80}
         headerHeight={64}
         listCellWidth='200px'
         onRowClick={handlRowClick}
         ranges={{
-          "1": {
-            startDate: '01/01/2023',
-            endDate: '01/15/2023'
+          'Sprint 13': {
+            startDate: '02/06/2024',
+            endDate: '02/15/2024'
           },
-          "2": {
-            startDate: '01/16/2023',
-            endDate: '01/30/2023'
+          'Sprint 14': {
+            startDate: '02/16/2024',
+            endDate: '02/25/2024'
           },
-          "3": {
-            startDate: '01/31/2023',
-            endDate: '02/15/2023'
+          'Sprint 15': {
+            startDate: '02/26/2024',
+            endDate: '03/06/2024'
           },
-          "4": {
-            startDate: '02/16/2023',
-            endDate: '02/28/2023'
+          'Sprint 16': {
+            startDate: '03/07/2024',
+            endDate: '03/16/2024'
           },
-          "5": {
-            startDate: '03/01/2023',
-            endDate: '03/15/2023'
+          'Sprint 17': {
+            startDate: '03/17/2024',
+            endDate: '03/26/2024'
           },
+          'Sprint 18': {
+            startDate: '03/27/2024',
+            endDate: '04/05/2024'
+          },
+          'Sprint 19': {
+            startDate: '04/06/2024',
+            endDate: '04/15/2024'
+          },
+          'Sprint 20': {
+            startDate: '04/16/2024',
+            endDate: '04/25/2024'
+          },
+          'Sprint 21': {
+            startDate: '04/26/2024',
+            endDate: '05/05/2024'
+          },
+          'Sprint 22': {
+            startDate: '05/06/2024',
+            endDate: '05/15/2024'
+          },
+          'Sprint 23': {
+            startDate: '05/16/2024',
+            endDate: '05/25/2024'
+          },
+          'Sprint 24': {
+            startDate: '05/26/2024',
+            endDate: '06/04/2024'
+          },
+          'Sprint 25': {
+            startDate: '06/05/2024',
+            endDate: '06/14/2024'
+          },
+          'Sprint 26': {
+            startDate: '06/15/2024',
+            endDate: '06/24/2024'
+          },
+          'Sprint 27': {
+            startDate: '06/25/2024',
+            endDate: '07/04/2024'
+          },
+          'Sprint 28': {
+            startDate: '07/05/2024',
+            endDate: '07/14/2024'
+          },
+          'Sprint 29': {
+            startDate: '07/15/2024',
+            endDate: '07/24/2024'
+          },
+          'Sprint 30': {
+            startDate: '07/25/2024',
+            endDate: '08/03/2024'
+          },
+          'Sprint 31': {
+            startDate: '08/04/2024',
+            endDate: '08/13/2024'
+          },
+          'Sprint 32': {
+            startDate: '08/14/2024',
+            endDate: '08/23/2024'
+          },
+          'Sprint 33': {
+            startDate: '08/24/2024',
+            endDate: '09/02/2024'
+          },
+          'Sprint 34': {
+            startDate: '09/03/2024',
+            endDate: '09/12/2024'
+          },
+          'Sprint 35': {
+            startDate: '09/13/2024',
+            endDate: '09/22/2024'
+          },
+          'Sprint 36': {
+            startDate: '09/23/2024',
+            endDate: '10/02/2024'
+          },
+          'Sprint 37': {
+            startDate: '10/03/2024',
+            endDate: '10/12/2024'
+          },
+          'Sprint 38': {
+            startDate: '10/13/2024',
+            endDate: '10/22/2024'
+          },
+          'Sprint 39': {
+            startDate: '10/23/2024',
+            endDate: '11/01/2024'
+          },
+          'Sprint 40': {
+            startDate: '11/02/2024',
+            endDate: '11/11/2024'
+          },
+          'Sprint 41': {
+            startDate: '11/12/2024',
+            endDate: '11/21/2024'
+          },
+          'Sprint 42': {
+            startDate: '11/22/2024',
+            endDate: '12/01/2024'
+          },
+          'Sprint 43': {
+            startDate: '12/02/2024',
+            endDate: '12/11/2024'
+          },
+          'Sprint 44': {
+            startDate: '12/12/2024',
+            endDate: '12/21/2024'
+          },
+          'Sprint 45': {
+            startDate: '12/22/2024',
+            endDate: '12/31/2024'
+          }
         }}
         barFill={46}
         // barBackgroundColor='#F04438'
-        headers={[{ key: 'stageName', title: 'Project Name' }, { key: 'outlook', title: 'Outlook' }, { key: 'subStageName', title: 'Substage' }]}
+        headers={[  { key: 'stageName', title: 'Stage Name' },
+        { key: 'subStageName', title: 'Substage' },
+        { key: 'team', title: 'Team' }]}
         addRecord={handleAddRecord}
         onExpanderClick={handleExpanderClick}
-        milestones={[{
-          endDate: '04/16/2023',
-          title: 'Development Start'
+        milestones={[
+          {
+            title: "Kick-off",
+            endDate: "03/31/2024",
+            startDate: "Invalid date",
+            status: "IN_PROGRESS"
         },
-        {
-          endDate: '04/16/2023',
-          title: 'Architecture Approved'
-        },
-        {
-          endDate: '04/16/2023',
-          title: 'Integration Testing'
-        },
-        {
-          endDate: '04/16/2023',
-          title: 'Go Live'
-        }]}
+          {
+              title: "Architecture Approved",
+              endDate: "03/12/2024",
+              startDate: "Invalid date",
+              status: "IMPACTED"
+          },
+      ]}
         onMilestoneClick={() => alert()}
         onStageRowClick={(tasl) => alert(tasl)}
         onDateChange={handleTaskChange}
