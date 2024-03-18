@@ -59,3 +59,23 @@ export const sortTasks = (taskA: Task, taskB: Task) => {
     return 0;
   }
 };
+
+
+
+export const lightenHexColor = (hex:string, percent:number) => {
+  // Parse the hex color to RGB
+  const bigint = parseInt(hex.slice(1), 16);
+  let r = (bigint >> 16) & 255;
+  let g = (bigint >> 8) & 255;
+  let b = bigint & 255;
+
+  // Calculate lighter shade
+  r = Math.min(255, Math.round(r * (1 + percent / 100)));
+  g = Math.min(255, Math.round(g * (1 + percent / 100)));
+  b = Math.min(255, Math.round(b * (1 + percent / 100)));
+
+  // Convert RGB back to hex
+  const newHex = '#' + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
+  return newHex;
+};
+

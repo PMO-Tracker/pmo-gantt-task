@@ -1,0 +1,20 @@
+.milestoneItem {
+    position: relative;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.milestonePolygon {
+    z-index: 1;
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -11px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid;
+    transform: rotate(360deg);
+  }
+  
