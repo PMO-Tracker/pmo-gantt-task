@@ -49,8 +49,8 @@ export const Arrow: React.FC<ArrowProps> = ({
 
   return (
     <g className={`arrow ${styles.arrow_clickable}`} onDoubleClick={handleArrowDoubleClick}>
-      <path strokeWidth="1.5" d={path} fill="none" />
-      <polygon points={trianglePoints} />
+      <path strokeWidth="3" d={path} fill="none" />
+      <polygon strokeWidth="2.5" points={trianglePoints} />
     </g>
   );
 };
