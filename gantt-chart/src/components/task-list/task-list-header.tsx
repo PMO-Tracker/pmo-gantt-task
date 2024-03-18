@@ -69,7 +69,8 @@ const statusNumberColor = {
                 justifyContent: 'center',
                 width: '100%',
                 borderTopLeftRadius: '6px',
-                borderRight: '1px solid #D9D9D9'
+                border: '1px solid #D9D9D9',
+                borderWidth:'0px 1px 1px 0px'
               }}
             >
              <span>Milestones</span>  
@@ -104,7 +105,8 @@ const statusNumberColor = {
                     color: '#101828',
                     borderTopLeftRadius: !isMilestoneAvailable && headerIndex === 0 ? '6px': '0px',
                     border: '1px solid #D9D9D9',
-                    borderLeftWidth: 0
+                    borderWidth:'0px 1px 1px 0px',
+                    textAlign:'center'
                   }}
                 >
                   &nbsp;{headerItem.title}
