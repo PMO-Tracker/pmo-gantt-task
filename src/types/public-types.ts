@@ -15,6 +15,10 @@ export interface TableMilestones {
   status?:string
 };
 
+export interface StatusCount {
+  [status: string]: number;
+}
+
 export enum ViewMode {
   Hour = "Hour",
   QuarterDay = "Quarter Day",

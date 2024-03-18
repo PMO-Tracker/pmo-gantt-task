@@ -20,7 +20,7 @@ import { BarTask } from "../../types/bar-task";
 import { convertToBarTasks } from "../../helpers/bar-helper";
 import { GanttEvent } from "../../types/gantt-task-actions";
 import { DateSetup } from "../../types/date-setup";
-import { HorizontalScroll } from "../other/horizontal-scroll";
+// import { HorizontalScroll } from "../other/horizontal-scroll";
 import { removeHiddenTasks, sortTasks } from "../../helpers/other-helper";
 import styles from "./gantt.module.css";
 import './index.css'
@@ -49,7 +49,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   rtl = false,
   handleWidth = 8,
   timeStep = 300000,
-  arrowColor = "grey",
+  arrowColor = "#344054",
   fontFamily = "Arial, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue",
   fontSize = "14px",
   arrowIndent = 20,
@@ -320,14 +320,14 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     }
   };
 
-  const handleScrollX = (event: SyntheticEvent<HTMLDivElement>) => {
-    if (scrollX !== event.currentTarget.scrollLeft && !ignoreScrollEvent) {
-      setScrollX(event.currentTarget.scrollLeft);
-      setIgnoreScrollEvent(true);
-    } else {
-      setIgnoreScrollEvent(false);
-    }
-  };
+  // const handleScrollX = (event: SyntheticEvent<HTMLDivElement>) => {
+  //   if (scrollX !== event.currentTarget.scrollLeft && !ignoreScrollEvent) {
+  //     setScrollX(event.currentTarget.scrollLeft);
+  //     setIgnoreScrollEvent(true);
+  //   } else {
+  //     setIgnoreScrollEvent(false);
+  //   }
+  // };
 
   /**
    * Handles arrow keys events and transform it to new scroll
@@ -487,7 +487,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     headers
   };
   return (
-    <div>
+    <div style={{border: '1px solid #D9D9D9', borderRadius: '8px'}}>
       <div
         className={styles.wrapper}
         onKeyDown={handleKeyDown}
@@ -532,13 +532,13 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
           rtl={rtl}
         />
       </div>
-      <HorizontalScroll
+      {/* <HorizontalScroll
         svgWidth={svgWidth}
         taskListWidth={taskListWidth}
         scroll={scrollX}
         rtl={rtl}
         onScroll={handleScrollX}
-      />
+      /> */}
     </div>
   );
 };
