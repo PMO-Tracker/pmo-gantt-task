@@ -44,8 +44,8 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
     <g onMouseDown={onMouseDown}>
       <defs>
      <linearGradient id={`gradient-${styles.backgroundColor}`} x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="30.27%" stop-color={lightenHexColor(styles.backgroundColor, 60)} />
-      <stop offset="104.59%" stop-color={styles.backgroundColor} />
+      <stop offset="30.27%" stopColor={lightenHexColor(styles.backgroundColor, 60)} />
+      <stop offset="104.59%" stopColor={styles.backgroundColor} />
     </linearGradient>
     </defs>
       <rect
