@@ -31,10 +31,12 @@
 }
 
 .milestoneStatus {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 200px;
   border: 2px solid white;
   text-align: center;
-  line-height: 24px;
 }
