@@ -2,6 +2,8 @@ import { Gantt, Task, ViewMode } from "gantt-task-react/dist/index";
 import "gantt-task-react/dist/index.css";
 import { useState } from "react";
 import "./App.css";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function initTasks() {
   const tasks : any [] = [
@@ -366,6 +368,7 @@ function App() {
 
   return (
     <div style={{ margin: '20px', textAlign: 'center'}}>
+      <DndProvider backend={HTML5Backend}>
       <Gantt
         tasks={tasks}
         viewMode={ViewMode.Range}
@@ -535,6 +538,7 @@ function App() {
         handleWidth={5}
         onArrowDoubleClick={()=>alert()}
       />
+      </DndProvider>
     </div>
   );
 }
