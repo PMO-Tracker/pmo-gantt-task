@@ -72,7 +72,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
         }
         if (newRelatedX < taskListWidth) {
           newRelatedX = svgContainerWidth + taskListWidth - tooltipWidth;
-          newRelatedY += rowHeight;
+          newRelatedY += rowHeight - 40;
         }
       }
 
