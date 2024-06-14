@@ -109,7 +109,7 @@ const statusNumberColor = {
                     textAlign:'center'
                   }}
                 >
-                  &nbsp;{headerItem.title}
+                 {headerItem.title}
                 </div>
               </React.Fragment>
             )
