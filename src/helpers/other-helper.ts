@@ -79,3 +79,37 @@ export const lightenHexColor = (hex:string, percent:number) => {
   return newHex;
 };
 
+export const getRangesForDate = (
+  ranges: Record<string, { startDate: string; endDate: string }>,
+  date: Date,
+  shortenName: boolean = false
+): string => {
+  const dateMonth = date.getMonth();
+  const dateYear = date.getFullYear();
+
+  const formatName = (name: string): string => {
+    if (name.includes('Sprint')) return shortenName ? `SP ${name.replace('Sprint ', '')}` : name;
+    if (name.includes('Quarter')) {
+      const match = name.match(/Quarter (\d+)/);
+      return shortenName ? `Q ${match?.[1]}` : `Quarter ${match?.[1]}`;
+    }
+    return name;
+  };
+
+  const result = Object.keys(ranges).reduce((acc, name) => {
+    const { startDate, endDate } = ranges[name];
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (
+      (start.getMonth() === dateMonth && start.getFullYear() === dateYear) ||
+      (end.getMonth() === dateMonth && end.getFullYear() === dateYear)
+    ) {
+      acc.push(formatName(name));
+    }
+
+    return acc;
+  }, [] as string[]);
+
+  return result.length ? ` (${result.join(', ')})` : '';
+};
