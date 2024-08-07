@@ -10,6 +10,7 @@ import {
 } from "../../helpers/date-helper";
 import { CalendarRanges, DateSetup } from "../../types/date-setup";
 import styles from "./calendar.module.css";
+import { getRangesForDate } from "../../helpers/other-helper";
 
 export type CalendarProps = {
   dateSetup: DateSetup;
@@ -82,9 +83,10 @@ export const Calendar: React.FC<CalendarProps> = ({
     const topValues: ReactChild[] = [];
     const bottomValues: ReactChild[] = [];
     const topDefaultHeight = headerHeight * 0.5;
+    const ranges = calendarRanges.ranges || {};
     for (let i = 0; i < dateSetup.dates.length; i++) {
       const date = dateSetup.dates[i];
-      const bottomValue = getLocaleMonth(date, locale);
+      const bottomValue = `${getLocaleMonth(date, locale)}${getRangesForDate(ranges, date, true)}`;
       bottomValues.push(
         <text
           key={bottomValue + date.getFullYear()}
@@ -183,12 +185,13 @@ export const Calendar: React.FC<CalendarProps> = ({
     let weeksCount: number = 1;
     const topDefaultHeight = headerHeight * 0.5;
     const dates = dateSetup.dates;
+    const ranges = calendarRanges.ranges || {};
     for (let i = dates.length - 1; i >= 0; i--) {
       const date = dates[i];
       let topValue = "";
       if (i === 0 || date.getMonth() !== dates[i - 1].getMonth()) {
         // top
-        topValue = `${getLocaleMonth(date, locale)}, ${date.getFullYear()}`;
+        topValue = `${getLocaleMonth(date, locale)}, ${date.getFullYear()}${getRangesForDate(ranges, date)}`;
       }
       // bottom
       const bottomValue = `W${getWeekNumberISO8601(date)}`;
@@ -197,7 +200,8 @@ export const Calendar: React.FC<CalendarProps> = ({
         <text
           key={date.getTime()}
           y={headerHeight * 0.8}
-          x={columnWidth * (i + +rtl)}
+          x={columnWidth * i + columnWidth * 0.5}
+          // x={columnWidth * (i + +rtl)}
           className={styles.calendarBottomText}
         >
           {bottomValue}
@@ -227,6 +231,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   const getCalendarValuesForDay = () => {
+    const ranges = calendarRanges.ranges || {};
     const topValues: ReactChild[] = [];
     const bottomValues: ReactChild[] = [];
     const topDefaultHeight = headerHeight * 0.5;
@@ -251,7 +256,7 @@ export const Calendar: React.FC<CalendarProps> = ({
         i + 1 !== dates.length &&
         date.getMonth() !== dates[i + 1].getMonth()
       ) {
-        const topValue = getLocaleMonth(date, locale);
+        const topValue = `${getLocaleMonth(date, locale)}${getRangesForDate(ranges, date)}`;
 
         topValues.push(
           <TopPartOfCalendar
