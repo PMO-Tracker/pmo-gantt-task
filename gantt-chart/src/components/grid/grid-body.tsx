@@ -11,10 +11,10 @@ export type GridBodyProps = {
   rowHeight: number;
   columnWidth: number;
   todayColor: string;
-  cadenceShadeColor:string;
+  cadenceShadeColor: string;
   rtl: boolean;
   onStageRowClick?: (item: Task) => void;
-  calendarRanges:CalendarRanges;
+  calendarRanges: CalendarRanges;
   viewMode: ViewMode;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
@@ -24,7 +24,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
   svgWidth,
   columnWidth,
   onStageRowClick,
-  calendarRanges:{ranges={}}={},
+  calendarRanges: {ranges={}}={},
   cadenceShadeColor,
   viewMode,
   // todayColor,
