@@ -1,7 +1,8 @@
-import React, { ReactChild } from "react";
-import { Task } from "../../types/public-types";
+import React, { ReactChild, useEffect, useState} from "react";
+import { Task, ViewMode } from "../../types/public-types";
 // import { addToDate } from "../../helpers/date-helper";
 import styles from "./grid.module.css";
+import { CalendarRanges } from "../../types/date-setup";
 
 export type GridBodyProps = {
   tasks: Task[];
@@ -10,8 +11,11 @@ export type GridBodyProps = {
   rowHeight: number;
   columnWidth: number;
   todayColor: string;
+  cadenceShadeColor: string;
   rtl: boolean;
   onStageRowClick?: (item: Task) => void;
+  calendarRanges: CalendarRanges;
+  viewMode: ViewMode;
 };
 export const GridBody: React.FC<GridBodyProps> = ({
   tasks,
@@ -19,10 +23,14 @@ export const GridBody: React.FC<GridBodyProps> = ({
   rowHeight,
   svgWidth,
   columnWidth,
-  onStageRowClick
+  onStageRowClick,
+  calendarRanges: {ranges={}}={},
+  cadenceShadeColor,
+  viewMode,
   // todayColor,
   // rtl,
 }) => {
+  const [dateSet, setDateSet] = useState(new Set());
   let y = 0;
   const gridRows: ReactChild[] = [];
   const rowLines: ReactChild[] = [
@@ -41,6 +49,23 @@ export const GridBody: React.FC<GridBodyProps> = ({
       onStageRowClick(task)
     }
   };
+
+useEffect(() => {
+  const updatedDateSet = new Set();
+  const rangeList = Object.values(ranges);
+  if(viewMode === ViewMode.Range && rangeList.length > 0){
+    rangeList.forEach((sprint, index) => {
+      if (index % 2 === 0) {
+        const start = new Date(sprint.startDate);
+        const end = new Date(sprint.endDate);
+        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+          updatedDateSet.add(d.getTime());
+        }
+      }
+    });
+    setDateSet(updatedDateSet);
+  }
+}, [ranges,viewMode]);
 
   for (const task of tasks) {
     gridRows.push(
@@ -71,6 +96,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
   // const now = new Date();
   let tickX = 0;
   const ticks: ReactChild[] = [];
+  const sprintTick: ReactChild[] = [];
   // let today: ReactChild = <rect />;
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
@@ -84,6 +110,17 @@ export const GridBody: React.FC<GridBodyProps> = ({
         className={styles.gridTick}
       />
     );
+
+  if (viewMode === ViewMode.Range && dateSet.has(date.getTime())) {
+   sprintTick.push(<rect
+    x={tickX}
+    y={0}
+    width={columnWidth}
+    height={y}
+    fill={cadenceShadeColor}
+  />)
+  }
+
     // if (
     //   (i + 1 !== dates.length &&
     //     date.getTime() < now.getTime() &&
@@ -132,6 +169,7 @@ export const GridBody: React.FC<GridBodyProps> = ({
       <g className="rows">{gridRows}</g>
       <g className="rowLines">{rowLines}</g>
       <g className="ticks">{ticks}</g>
+      <g className="today">{sprintTick}</g>
       {/* <g className="today">{today}</g> */}
     </g>
   );
