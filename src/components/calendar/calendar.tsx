@@ -130,14 +130,17 @@ export const Calendar: React.FC<CalendarProps> = ({
     const dates = dateSetup.dates;
     const ranges = calendarRanges.ranges || {};
     let midRanges = {};
-    Object.keys(ranges).forEach((key: any) => {
-      const midRange = (new Date(new Date(ranges[key].endDate) as any - ((new Date(ranges[key].endDate) as any) - (new Date(ranges[key].startDate) as any)) / 2));
+    const endDateMap = new Map();
+    for (const [sprint, dates] of Object.entries(ranges)) {
+      const {startDate,endDate} = dates
+      const midRange = (new Date(new Date(endDate) as any - ((new Date(endDate) as any) - (new Date(startDate) as any)) / 2));
       const midRangeTime = new Date(midRange.getFullYear(), midRange.getMonth(), midRange.getDate()).getTime();
       midRanges[midRangeTime] = {
         date: midRange,
-        sprint: key
+        sprint
       }
-    });
+      endDateMap.set(new Date(endDate).getTime(), sprint);
+  }
 
     // const midRanges = Object.keys(ranges).map((key: any) => {
     //   return {
@@ -149,16 +152,28 @@ export const Calendar: React.FC<CalendarProps> = ({
     let tickX = 0;
 
     for (let i = 0; i < dates.length; i++) {
+      const date = dates[i]
       tickX += columnWidth;
       const currentDateTime = new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime();
       const matchedDateRange = midRanges[currentDateTime];
+      const bottomValue = `${date.getMonth() + 1}/${date.getDate()}`;
+      bottomValues.push(
+        <text
+          key={date.getTime()}
+          y={headerHeight * 0.9}
+          x={columnWidth * i + columnWidth * 0.5}
+          className={styles.calendarBottomText}
+        >
+          {bottomValue}
+        </text>
+      );
 
       if (matchedDateRange) {
         const rangeToShow = `${ranges[matchedDateRange.sprint].startDate} - ${ranges[matchedDateRange.sprint].endDate}`;
         topValues.push(
           <React.Fragment key={`sprint-${rangeToShow}`}>
             <text
-              y={headerHeight * 0.4}
+              y={headerHeight * 0.3}
               x={tickX}
               className={`${styles.calendarBottomText} ${styles.calendarUpperBottomText}`}
             >
@@ -166,7 +181,7 @@ export const Calendar: React.FC<CalendarProps> = ({
             </text>
             <text
               key={rangeToShow}
-              y={headerHeight * 0.8}
+              y={headerHeight * 0.6}
               x={tickX}
               className={styles.calendarBottomText}
             >
@@ -174,6 +189,18 @@ export const Calendar: React.FC<CalendarProps> = ({
             </text>
           </React.Fragment>
         );
+      }
+      if(endDateMap.get(date.getTime())){
+        topValues.push(
+          <line
+          x1={columnWidth * (i + 1)}
+          y1={0}
+          x2={columnWidth * (i + 1)}
+          y2={headerHeight * 0.5}
+          className={styles.calendarTopTick}
+          key={date.getTime() + "line"}
+        />
+        )
       }
     }
     return [topValues, bottomValues];
