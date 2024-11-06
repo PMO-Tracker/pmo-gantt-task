@@ -37,3 +37,8 @@
 .calendarHeader {
   fill: #F2F4F7;
 }
+
+.currentCadence {
+  font-size: large;
+  fill: red;
+}
