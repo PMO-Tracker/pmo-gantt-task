@@ -113,3 +113,9 @@ export const getRangesForDate = (
 
   return result.length ? ` (${result.join(', ')})` : '';
 };
+
+export const addDatesToSet = (start: Date, end: Date, dateSet: any) => {
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    dateSet.add(d.getTime());
+  }
+};
