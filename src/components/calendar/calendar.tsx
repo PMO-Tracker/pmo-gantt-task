@@ -11,6 +11,7 @@ import {
 import { CalendarRanges, DateSetup } from "../../types/date-setup";
 import styles from "./calendar.module.css";
 import { getRangesForDate } from "../../helpers/other-helper";
+import { addDatesToSet } from "../../helpers/other-helper";
 
 export type CalendarProps = {
   dateSetup: DateSetup;
@@ -131,13 +132,21 @@ export const Calendar: React.FC<CalendarProps> = ({
     const ranges = calendarRanges.ranges || {};
     let midRanges = {};
     const endDateMap = new Map();
+    const currentCadenceDateSet = new Set();
+    const currentDate = new Date();
+
     for (const [sprint, dates] of Object.entries(ranges)) {
       const {startDate,endDate} = dates
-      const midRange = (new Date(new Date(endDate) as any - ((new Date(endDate) as any) - (new Date(startDate) as any)) / 2));
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const midRange = (new Date(end as any - ((end as any) - (start as any)) / 2));
       const midRangeTime = new Date(midRange.getFullYear(), midRange.getMonth(), midRange.getDate()).getTime();
       midRanges[midRangeTime] = {
         date: midRange,
         sprint
+      }
+      if (currentDate >= start && currentDate <= end) {
+        addDatesToSet(start, end, currentCadenceDateSet);
       }
       endDateMap.set(new Date(endDate).getTime(), sprint);
   }
@@ -179,6 +188,13 @@ export const Calendar: React.FC<CalendarProps> = ({
             >
               {matchedDateRange.sprint}
             </text>
+            { currentCadenceDateSet.has(date.getTime()) && <text
+              y={headerHeight * 0.3}
+              x={tickX - 48}
+              className={styles.currentCadence}
+            >
+              *
+            </text>}
             <text
               key={rangeToShow}
               y={headerHeight * 0.6}

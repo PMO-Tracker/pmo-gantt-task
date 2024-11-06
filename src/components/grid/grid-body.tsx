@@ -3,6 +3,7 @@ import { Task, ViewMode } from "../../types/public-types";
 // import { addToDate } from "../../helpers/date-helper";
 import styles from "./grid.module.css";
 import { CalendarRanges } from "../../types/date-setup";
+import { addDatesToSet } from "../../helpers/other-helper";
 
 export type GridBodyProps = {
   tasks: Task[];
@@ -11,7 +12,8 @@ export type GridBodyProps = {
   rowHeight: number;
   columnWidth: number;
   todayColor: string;
-  cadenceShadeColor: string;
+  alternateShadeColor: string;
+  currentShadeColor: string;
   rtl: boolean;
   onStageRowClick?: (item: Task) => void;
   calendarRanges: CalendarRanges;
@@ -25,12 +27,15 @@ export const GridBody: React.FC<GridBodyProps> = ({
   columnWidth,
   onStageRowClick,
   calendarRanges: {ranges={}}={},
-  cadenceShadeColor,
+  alternateShadeColor,
+  currentShadeColor,
   viewMode,
   // todayColor,
   // rtl,
 }) => {
-  const [dateSet, setDateSet] = useState(new Set());
+  const [alternateDateSet, setAlternateDateSet] = useState(new Set());
+  const [currentCadenceDateSet, setCurrentCadenceDateSet] = useState(new Set());
+
   let y = 0;
   const gridRows: ReactChild[] = [];
   const rowLines: ReactChild[] = [
@@ -51,20 +56,31 @@ export const GridBody: React.FC<GridBodyProps> = ({
   };
 
 useEffect(() => {
-  const updatedDateSet = new Set();
+  const dateSet = new Set();
   const rangeList = Object.values(ranges);
-  if(viewMode === ViewMode.Range && rangeList.length > 0){
+  const currentDate = new Date();
+  const currentDateSet = new Set();
+
+  if (viewMode === ViewMode.Range && rangeList.length > 0) {
     rangeList.forEach((sprint, index) => {
+      const start = new Date(sprint.startDate);
+      const end = new Date(sprint.endDate);
+
+      // Condition for alternative sprints (index % 2 === 0)
       if (index % 2 === 0) {
-        const start = new Date(sprint.startDate);
-        const end = new Date(sprint.endDate);
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-          updatedDateSet.add(d.getTime());
-        }
+        addDatesToSet(start, end, dateSet);
+      }
+
+      // Condition for the current sprint (current date falls within the sprint range)
+      if (currentDate >= start && currentDate <= end) {
+        addDatesToSet(start, end, currentDateSet);
       }
     });
-    setDateSet(updatedDateSet);
+
+    setAlternateDateSet(dateSet); // State for alternative sprints
+    setCurrentCadenceDateSet(currentDateSet); // State for the current sprint
   }
+
 }, [ranges,viewMode]);
 
   for (const task of tasks) {
@@ -97,6 +113,8 @@ useEffect(() => {
   let tickX = 0;
   const ticks: ReactChild[] = [];
   const sprintTick: ReactChild[] = [];
+  let isAlternateCadence = false;
+  let isCurrentCadence = false;
   // let today: ReactChild = <rect />;
   for (let i = 0; i < dates.length; i++) {
     const date = dates[i];
@@ -110,14 +128,16 @@ useEffect(() => {
         className={styles.gridTick}
       />
     );
-
-  if (viewMode === ViewMode.Range && dateSet.has(date.getTime())) {
+  isAlternateCadence = alternateDateSet.has(date.getTime())
+  isCurrentCadence = currentCadenceDateSet.has(date.getTime())
+    
+  if (viewMode === ViewMode.Range && (isAlternateCadence || isCurrentCadence)) {
    sprintTick.push(<rect
     x={tickX}
     y={0}
     width={columnWidth}
     height={y}
-    fill={cadenceShadeColor}
+    fill={isCurrentCadence ? currentShadeColor : alternateShadeColor}
   />)
   }
 
