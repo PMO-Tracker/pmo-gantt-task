@@ -23,7 +23,6 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
   barProps,
   ganttHeight,
   scrollY,
-  scrollX,
   milestones,
   onMilestoneClick
 }) => {
@@ -39,11 +38,6 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
     }
   }, [scrollY]);
 
-  useEffect(() => {
-    if (verticalGanttContainerRef.current) {
-      verticalGanttContainerRef.current.scrollLeft = scrollX;
-    }
-  }, [scrollX]);
 
   return (
     <div

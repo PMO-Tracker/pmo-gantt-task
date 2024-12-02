@@ -102,7 +102,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   const [selectedTask, setSelectedTask] = useState<BarTask>();
   const [failedTask, setFailedTask] = useState<BarTask | null>(null);
 
-  const svgWidth = dateSetup.dates.length * columnWidth;
+  const svgWidth = dateSetup.dates.length * columnWidth; 
   const ganttFullHeight = barTasks.length * rowHeight;
 
   const [scrollY, setScrollY] = useState(0);
@@ -258,6 +258,12 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       setSvgContainerWidth(wrapperRef.current.offsetWidth - taskListWidth);
     }
   }, [wrapperRef, taskListWidth]);
+
+  useEffect(() => {
+    if (wrapperRef?.current) {
+      wrapperRef.current.scrollLeft=scrollX
+    }
+  }, [scrollX, wrapperRef]);
 
   useEffect(() => {
     if (ganttHeight) {
@@ -479,6 +485,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     locale,
     headerHeight,
     scrollY,
+    scrollX,
     ganttHeight,
     horizontalContainerClass: styles.horizontalContainer,
     selectedTask,
@@ -493,7 +500,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     headers
   };
   return (
-    <div style={{border: '1px solid #D9D9D9', borderRadius: '8px'}}>
+    <div style={{border: '1px solid #D9D9D9', borderRadius: '8px', position:'relative'}}>
       <div
         className={styles.wrapper}
         onKeyDown={handleKeyDown}
