@@ -485,7 +485,6 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     locale,
     headerHeight,
     scrollY,
-    scrollX,
     ganttHeight,
     horizontalContainerClass: styles.horizontalContainer,
     selectedTask,
@@ -514,7 +513,6 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
           barProps={barProps}
           ganttHeight={ganttHeight}
           scrollY={scrollY}
-          scrollX={scrollX}
           milestones={milestones}
           onMilestoneClick={handleMilestoneClick}
         />
