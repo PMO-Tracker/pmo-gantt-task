@@ -12,7 +12,6 @@ export type TaskGanttProps = {
   barProps: TaskGanttContentProps;
   ganttHeight: number;
   scrollY: number;
-  scrollX: number;
   milestones: TableMilestones[],
   onMilestoneClick: (item: TableMilestones) => void;
   onArrowDoubleClick?: (taskFrom: Task, taskTo: Task) => void;
