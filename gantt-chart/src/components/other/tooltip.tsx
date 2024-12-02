@@ -64,13 +64,13 @@ export const Tooltip: React.FC<TooltipProps> = ({
         const fullChartWidth = taskListWidth + svgContainerWidth;
         if (tooltipLeftmostPoint > fullChartWidth) {
           newRelatedX =
-            task.x1 +
-            taskListWidth -
-            arrowIndent * 1.5 -
-            scrollX -
-            tooltipWidth;
+          task.x1 +
+          taskListWidth -
+          arrowIndent * 1.5 -
+          scrollX -
+          tooltipWidth;
         }
-        if (newRelatedX < taskListWidth) {
+        if (newRelatedX < scrollX) {
           newRelatedX = svgContainerWidth + taskListWidth - tooltipWidth;
           newRelatedY += rowHeight;
         }

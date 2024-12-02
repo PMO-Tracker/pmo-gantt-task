@@ -10,8 +10,6 @@ export const HorizontalScroll: React.FC<{
 }> = ({
   scroll, 
   svgWidth, 
-  taskListWidth,
-  //  rtl,
   onScroll }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -22,8 +20,6 @@ export const HorizontalScroll: React.FC<{
   }, [scroll]);
   return (
     <div style={{display:"flex"}}>
-    <div style={{width:taskListWidth,background:'#F4F4F4'}}>
-    </div>
     <div
       dir="ltr"
       className={styles.scrollWrapper}
