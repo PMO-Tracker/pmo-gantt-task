@@ -176,5 +176,6 @@ export interface StylingOption {
 export interface GanttProps extends CalendarRanges, EventOption, DisplayOption, StylingOption {
   tasks: Task[];
   headers?:TableHeader[],
-  milestones?: TableMilestones[]
+  milestones?: TableMilestones[],
+  cadenceStartDate?: string
 }
