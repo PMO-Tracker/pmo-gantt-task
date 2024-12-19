@@ -30,6 +30,7 @@ export type TaskGanttContentProps = {
   setGanttEvent: (value: GanttEvent) => void;
   setFailedTask: (value: BarTask | null) => void;
   setSelectedTask: (taskId: string) => void;
+  cadenceStartDate?: string;
 } & EventOption;
 
 export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
@@ -55,7 +56,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
   onDoubleClick,
   onClick,
   onDelete,
-  onArrowDoubleClick
+  onArrowDoubleClick,
+  cadenceStartDate
 }) => {
   const point = svg?.current?.createSVGPoint();
   const [xStep, setXStep] = useState(0);
@@ -72,6 +74,10 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
     const newXStep = (timeStep * columnWidth) / dateDelta;
     setXStep(newXStep);
   }, [columnWidth, dates, timeStep]);
+
+  const validateTaskDate = (cadenceStartDate: string | undefined, taskStart: Date) => {  
+    return !cadenceStartDate || new Date(taskStart) >= new Date(cadenceStartDate as string);;
+  };
 
   useEffect(() => {
     const handleMouseMove = async (event: MouseEvent) => {
@@ -116,8 +122,9 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
         initEventX1Delta,
         rtl
       );
+      const isTaskStartDateValid = validateTaskDate(cadenceStartDate,newChangedTask.start)
 
-      const isNotLikeOriginal =
+      const isNotLikeOriginal = 
         originalSelectedTask.start !== newChangedTask.start ||
         originalSelectedTask.end !== newChangedTask.end ||
         originalSelectedTask.progress !== newChangedTask.progress;
@@ -133,7 +140,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       if (
         (action === "move" || action === "end" || action === "start") &&
         onDateChange &&
-        isNotLikeOriginal
+        isNotLikeOriginal && isTaskStartDateValid
       ) {
         try {
           const result = await onDateChange(
@@ -159,9 +166,8 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
           operationSuccess = false;
         }
       }
-
       // If operation is failed - return old state
-      if (!operationSuccess) {
+      if (!operationSuccess || !isTaskStartDateValid) {
         setFailedTask(originalSelectedTask);
       }
     };
