@@ -1,5 +1,9 @@
-import React, { useEffect,useState } from "react";
-import { TableHeader, TableMilestones, StatusCount } from "../../types/public-types";
+import React, { useEffect, useState } from "react";
+import {
+  TableHeader,
+  TableMilestones,
+  StatusCount,
+} from "../../types/public-types";
 import styles from "./task-list-header.module.css";
 
 export const TaskListHeaderDefault: React.FC<{
@@ -7,32 +11,42 @@ export const TaskListHeaderDefault: React.FC<{
   rowWidth: string;
   fontFamily: string;
   fontSize: string;
-  headers: TableHeader[],
-  milestones: TableMilestones[]
-}> = ({ headerHeight, fontFamily, fontSize, rowWidth, headers, milestones }) => {
+  headers: TableHeader[];
+  milestones: TableMilestones[];
+  taskListHeaderHeight: number;
+  showPICadenceHeader: boolean;
+}> = ({
+  headerHeight,
+  fontFamily,
+  fontSize,
+  rowWidth,
+  headers,
+  milestones,
+  taskListHeaderHeight,
+  showPICadenceHeader,
+}) => {
   const isMilestoneAvailable = milestones?.length > 0;
-  const milestoneStatus = ['DONE','IMPACTED','IN_PROGRESS']
+  const milestoneStatus = ["DONE", "IMPACTED", "IN_PROGRESS"];
 
   const [statusCount, setStatusCount] = useState<StatusCount>({});
 
   const statusColor = {
-    DONE: '#CAF1CE',
-    IMPACTED: '#FFD0D0',
-    IN_PROGRESS: '#fefefe'
-};
+    DONE: "#CAF1CE",
+    IMPACTED: "#FFD0D0",
+    IN_PROGRESS: "#fefefe",
+  };
 
-const statusNumberColor = {
-  DONE: '#00C514',
-    IMPACTED: '#FF0000',
-    IN_PROGRESS: '#D9D9D9'
-};
-
+  const statusNumberColor = {
+    DONE: "#00C514",
+    IMPACTED: "#FF0000",
+    IN_PROGRESS: "#D9D9D9",
+  };
 
   useEffect(() => {
     const calculateStatusCount = () => {
       const count: StatusCount = {};
-      milestones.forEach((item:TableMilestones) => {
-        if(item.status){
+      milestones.forEach((item: TableMilestones) => {
+        if (item.status) {
           count[item.status] = (count[item.status] || 0) + 1;
         }
       });
@@ -42,79 +56,81 @@ const statusNumberColor = {
     calculateStatusCount();
   }, [milestones]);
 
-
   return (
     <div
       // className={styles.ganttTable}
       style={{
         fontFamily: fontFamily,
-        fontSize: fontSize
+        fontSize: fontSize,
       }}
     >
-      {
-        isMilestoneAvailable && (
+      {isMilestoneAvailable && (
+        <div
+          className={`${styles.ganttTable_Header} ${styles.milestoneHeader}`}
+          style={{
+            height: headerHeight,
+          }}
+        >
           <div
-            className={`${styles.ganttTable_Header} ${styles.milestoneHeader}`}
+            className={styles.ganttTable_HeaderItem}
             style={{
-              height: headerHeight,
+              background: "#F2F4F7",
+              color: "#101828",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              borderTopLeftRadius: "6px",
+              border: "1px solid #D9D9D9",
+              borderWidth: "0px 1px 1px 0px",
             }}
           >
-            <div
-              className={styles.ganttTable_HeaderItem}
-              style={{
-                background: '#F2F4F7',
-                color: '#101828',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                borderTopLeftRadius: '6px',
-                border: '1px solid #D9D9D9',
-                borderWidth:'0px 1px 1px 0px'
-              }}
-            >
-             <span>Milestones</span>  
-             {
-             milestoneStatus.map((status)=>{
+            <span>Milestones</span>
+            {milestoneStatus.map(status => {
               return (
-                <div className={styles.milestoneStatus} style={{background: statusColor[status],marginLeft:status === 'DONE' ? '8px' : '-8px' }}>
-                <span style={{color:statusNumberColor[status]}}>{statusCount[status] || 0}</span>
-              </div>
-              )
-             })
-             }
-            </div>
+                <div
+                  className={styles.milestoneStatus}
+                  style={{
+                    background: statusColor[status],
+                    marginLeft: status === "DONE" ? "8px" : "-8px",
+                  }}
+                >
+                  <span style={{ color: statusNumberColor[status] }}>
+                    {statusCount[status] || 0}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-        )
-      }
+        </div>
+      )}
       <div
         className={styles.ganttTable_Header}
         style={{
-          height: headerHeight
+          height: showPICadenceHeader ? taskListHeaderHeight : headerHeight,
         }}
       >
-        {
-          headers.map((headerItem, headerIndex) => {
-            return (
-              <React.Fragment key={headerItem.title}>
-                <div
-                  className={styles.ganttTable_HeaderItem}
-                  style={{
-                    minWidth: rowWidth,
-                    background: '#F2F4F7',
-                    color: '#101828',
-                    borderTopLeftRadius: !isMilestoneAvailable && headerIndex === 0 ? '6px': '0px',
-                    border: '1px solid #D9D9D9',
-                    borderWidth:'0px 1px 1px 0px',
-                    textAlign:'center'
-                  }}
-                >
-                 {headerItem.title}
-                </div>
-              </React.Fragment>
-            )
-          })
-        }
+        {headers.map((headerItem, headerIndex) => {
+          return (
+            <React.Fragment key={headerItem.title}>
+              <div
+                className={styles.ganttTable_HeaderItem}
+                style={{
+                  minWidth: rowWidth,
+                  background: "#F2F4F7",
+                  color: "#101828",
+                  borderTopLeftRadius:
+                    !isMilestoneAvailable && headerIndex === 0 ? "6px" : "0px",
+                  border: "1px solid #D9D9D9",
+                  borderWidth: "0px 1px 1px 0px",
+                  textAlign: "center",
+                }}
+              >
+                {headerItem.title}
+              </div>
+            </React.Fragment>
+          );
+        })}
       </div>
     </div>
   );

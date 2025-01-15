@@ -2,18 +2,18 @@ import { CalendarRanges } from "./date-setup";
 
 export interface TableHeader {
   key: string;
-  title: string,
-  showAddButton?: boolean,
-  bullet?: boolean,
-  render? : (task: Task) => any;
-};
+  title: string;
+  showAddButton?: boolean;
+  bullet?: boolean;
+  render?: (task: Task) => any;
+}
 
 export interface TableMilestones {
   title: string;
   endDate?: string;
   startDate?: string;
-  status?:string
-};
+  status?: string;
+}
 
 export interface StatusCount {
   [status: string]: number;
@@ -28,14 +28,14 @@ export enum ViewMode {
   Week = "Week",
   Month = "Month",
   Year = "Year",
-  Range = "Range"
+  Range = "Range",
 }
 export type TaskType = "task" | "milestone" | "project";
 export interface Task {
   id: string;
   type: TaskType;
   stageName: string;
-  subStageName?: string; 
+  subStageName?: string;
   team?: string;
   jiraEpics?: string;
   start: Date;
@@ -55,8 +55,8 @@ export interface Task {
   dependencies?: string[];
   hideChildren?: boolean;
   displayOrder?: number;
-  hide?:boolean;
-  barText? :string
+  hide?: boolean;
+  barText?: string;
 }
 
 export interface EventOption {
@@ -102,7 +102,7 @@ export interface EventOption {
   addRecord?: (item: string) => void;
   onMilestoneClick?: (item: TableMilestones) => void;
   onStageRowClick?: (item: Task) => void;
-  onArrowDoubleClick:  (taskFrom: Task, taskTo: Task) => void;
+  onArrowDoubleClick: (taskFrom: Task, taskTo: Task) => void;
 }
 
 export interface DisplayOption {
@@ -156,6 +156,7 @@ export interface StylingOption {
     rowWidth: string;
     fontFamily: string;
     fontSize: string;
+    taskListHeaderHeight: number;
   }>;
   TaskListTable?: React.FC<{
     rowHeight: number;
@@ -173,9 +174,33 @@ export interface StylingOption {
   }>;
 }
 
-export interface GanttProps extends CalendarRanges, EventOption, DisplayOption, StylingOption {
+export type PICadenceData = {
+  id: string;
+  programIncrement: string;
+  numberOfSprints: number;
+  firstSprintOfProgramIncrement: string;
+};
+export interface GanttProps
+  extends CalendarRanges,
+    EventOption,
+    DisplayOption,
+    StylingOption {
   tasks: Task[];
-  headers?:TableHeader[],
-  milestones?: TableMilestones[],
-  cadenceStartDate?: string
+  headers?: TableHeader[];
+  milestones?: TableMilestones[];
+  cadenceStartDate?: string;
+  taskListHeaderHeight?: number;
+  piCadenceHeaderHeight?: number;
+  piCadenceHeaderBackgroundColor?: string;
+  piCadence?: PICadenceData[];
 }
+
+export type ProgramIncrementData = {
+  programIncrement: string;
+  tickX: number;
+};
+
+export type MidRangeData = {
+  date: Date;
+  sprint: string;
+};
