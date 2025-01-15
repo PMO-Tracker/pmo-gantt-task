@@ -5,6 +5,8 @@ import styles from "./task-list.module.css";
 
 export type TaskListProps = {
   headerHeight: number;
+  taskListHeaderHeight: number;
+  showPICadenceHeader: boolean;
   rowWidth: string;
   fontFamily: string;
   fontSize: string;
@@ -13,22 +15,24 @@ export type TaskListProps = {
   scrollY: number;
   locale: string;
   tasks: Task[];
-  headers:TableHeader[];
+  headers: TableHeader[];
   taskListRef: React.RefObject<HTMLDivElement>;
   horizontalContainerClass?: string;
   selectedTask: BarTask | undefined;
-  milestones: TableMilestones[],
+  milestones: TableMilestones[];
   setSelectedTask: (task: string) => void;
   onExpanderClick: (task: Task) => void;
-  onRowClick: (task: Task) => void,
-  addRecord: (item: string) => void,
+  onRowClick: (task: Task) => void;
+  addRecord: (item: string) => void;
   TaskListHeader: React.FC<{
     headerHeight: number;
     rowWidth: string;
     fontFamily: string;
     fontSize: string;
     headers: TableHeader[];
-    milestones: TableMilestones[]
+    milestones: TableMilestones[];
+    taskListHeaderHeight: number;
+    showPICadenceHeader: boolean;
   }>;
   TaskListTable: React.FC<{
     rowHeight: number;
@@ -41,8 +45,8 @@ export type TaskListProps = {
     selectedTaskId: string;
     setSelectedTask: (taskId: string) => void;
     onExpanderClick: (task: Task) => void;
-    onRowClick: (task: Task) => void,
-    addRecord: (item: string) => void,
+    onRowClick: (task: Task) => void;
+    addRecord: (item: string) => void;
   }>;
 };
 
@@ -66,7 +70,9 @@ export const TaskList: React.FC<TaskListProps> = ({
   TaskListHeader,
   TaskListTable,
   headers,
-  milestones
+  milestones,
+  taskListHeaderHeight,
+  showPICadenceHeader,
 }) => {
   const horizontalContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -81,7 +87,9 @@ export const TaskList: React.FC<TaskListProps> = ({
     fontSize,
     rowWidth,
     headers,
-    milestones
+    milestones,
+    taskListHeaderHeight,
+    showPICadenceHeader,
   };
   const selectedTaskId = selectedTask ? selectedTask.id : "";
   const tableProps = {
@@ -96,7 +104,7 @@ export const TaskList: React.FC<TaskListProps> = ({
     setSelectedTask,
     onExpanderClick,
     onRowClick,
-    addRecord
+    addRecord,
   };
 
   return (

@@ -5,7 +5,12 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { ViewMode, GanttProps, Task, TableMilestones } from "../../types/public-types";
+import {
+  ViewMode,
+  GanttProps,
+  Task,
+  TableMilestones,
+} from "../../types/public-types";
 import { GridProps } from "../grid/grid";
 import { ganttDateRange, seedDates } from "../../helpers/date-helper";
 import { CalendarProps } from "../calendar/calendar";
@@ -23,10 +28,12 @@ import { DateSetup } from "../../types/date-setup";
 import { HorizontalScroll } from "../other/horizontal-scroll";
 import { removeHiddenTasks, sortTasks } from "../../helpers/other-helper";
 import styles from "./gantt.module.css";
-import './index.css'
+import "./index.css";
 export const Gantt: React.FunctionComponent<GanttProps> = ({
   tasks,
   headerHeight = 50,
+  taskListHeaderHeight = headerHeight,
+  piCadenceHeaderHeight = 30,
   columnWidth = 60,
   listCellWidth = "155px",
   rowHeight = 50,
@@ -46,6 +53,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   projectBackgroundSelectedColor = "#f7bb53",
   milestoneBackgroundColor = "#f1c453",
   milestoneBackgroundSelectedColor = "#f29e4c",
+  piCadenceHeaderBackgroundColor = "#3E79F7",
   rtl = false,
   handleWidth = 8,
   timeStep = 300000,
@@ -60,10 +68,16 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   TooltipContent = StandardTooltipContent,
   TaskListHeader = TaskListHeaderDefault,
   TaskListTable = TaskListTableDefault,
-  headers = [{ key: 'stageName', title: 'Stage Name' }, { key: 'subStageName', title: 'SubStage Name' }, { key: 'team', title: 'Team' }, { key: 'jiraEpics', title: 'Jira Epics' }],
+  headers = [
+    { key: "stageName", title: "Stage Name" },
+    { key: "subStageName", title: "SubStage Name" },
+    { key: "team", title: "Team" },
+    { key: "jiraEpics", title: "Jira Epics" },
+  ],
   ranges = {},
   milestones = [],
   cadenceStartDate,
+  piCadence = [],
   onDateChange,
   onProgressChange,
   onDoubleClick,
@@ -75,13 +89,22 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   addRecord,
   onMilestoneClick,
   onStageRowClick,
-  onArrowDoubleClick
+  onArrowDoubleClick,
 }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const taskListRef = useRef<HTMLDivElement>(null);
   const [dateSetup, setDateSetup] = useState<DateSetup>(() => {
-    const [startDate, endDate] = ganttDateRange(tasks, viewMode, preStepsCount, ranges);
-    const { dates, ranges: dateRanges } = seedDates(startDate, endDate, viewMode);
+    const [startDate, endDate] = ganttDateRange(
+      tasks,
+      viewMode,
+      preStepsCount,
+      ranges
+    );
+    const { dates, ranges: dateRanges } = seedDates(
+      startDate,
+      endDate,
+      viewMode
+    );
     return { viewMode, dates, ranges: dateRanges };
   });
   const [currentViewDate, setCurrentViewDate] = useState<Date | undefined>(
@@ -103,7 +126,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
   const [selectedTask, setSelectedTask] = useState<BarTask>();
   const [failedTask, setFailedTask] = useState<BarTask | null>(null);
 
-  const svgWidth = dateSetup.dates.length * columnWidth; 
+  const svgWidth = dateSetup.dates.length * columnWidth;
   const ganttFullHeight = barTasks.length * rowHeight;
 
   const [scrollY, setScrollY] = useState(0);
@@ -125,7 +148,11 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       preStepsCount,
       ranges
     );
-    let { dates: newDates, ranges: dateRanges } = seedDates(startDate, endDate, viewMode);
+    let { dates: newDates, ranges: dateRanges } = seedDates(
+      startDate,
+      endDate,
+      viewMode
+    );
 
     if (rtl) {
       newDates = newDates.reverse();
@@ -262,7 +289,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 
   useEffect(() => {
     if (wrapperRef?.current) {
-      wrapperRef.current.scrollLeft=scrollX
+      wrapperRef.current.scrollLeft = scrollX;
     }
   }, [scrollX, wrapperRef]);
 
@@ -407,7 +434,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       onExpanderClick({ ...task, hideChildren: !task.hideChildren });
     }
   };
-  
+
   const handleOnRowClick = (task: Task) => {
     if (onRowClick) {
       onRowClick(task);
@@ -425,7 +452,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       onMilestoneClick(milestone);
     }
   };
-  
+
   const gridProps: GridProps = {
     columnWidth,
     svgWidth,
@@ -438,7 +465,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     rtl,
     onStageRowClick,
     calendarRanges: { ranges },
-    viewMode
+    viewMode,
   };
   const calendarProps: CalendarProps = {
     dateSetup,
@@ -449,8 +476,19 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     fontFamily,
     fontSize,
     rtl,
-    calendarRanges: { ranges }
+    calendarRanges: { ranges },
   };
+
+  const shouldShowPICadence = () => {
+    const rangeKeys = Object.keys(ranges);
+    return (
+      rangeKeys.length > 0 &&
+      !rangeKeys.some(key => key.includes("Quarter")) &&
+      viewMode === ViewMode.Range &&
+      piCadence.length > 0
+    );
+  };
+
   const barProps: TaskGanttContentProps = {
     tasks: barTasks,
     dates: dateSetup.dates,
@@ -475,7 +513,7 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     onDoubleClick,
     onClick,
     onDelete,
-    onArrowDoubleClick
+    onArrowDoubleClick,
   };
 
   const tableProps: TaskListProps = {
@@ -498,10 +536,19 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     addRecord: handleAddRecord,
     TaskListHeader,
     TaskListTable,
-    headers
+    headers,
+    taskListHeaderHeight,
+    showPICadenceHeader: shouldShowPICadence(),
   };
+
   return (
-    <div style={{border: '1px solid #D9D9D9', borderRadius: '8px', position:'relative'}}>
+    <div
+      style={{
+        border: "1px solid #D9D9D9",
+        borderRadius: "8px",
+        position: "relative",
+      }}
+    >
       <div
         className={styles.wrapper}
         onKeyDown={handleKeyDown}
@@ -510,6 +557,10 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
       >
         {listCellWidth && <TaskList {...tableProps} />}
         <TaskGantt
+          piCadence={piCadence}
+          piCadenceHeaderHeight={piCadenceHeaderHeight}
+          piCadenceHeaderBackgroundColor={piCadenceHeaderBackgroundColor}
+          showPICadenceHeader={shouldShowPICadence()}
           gridProps={gridProps}
           calendarProps={calendarProps}
           barProps={barProps}
