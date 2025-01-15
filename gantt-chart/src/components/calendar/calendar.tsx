@@ -1,5 +1,5 @@
 import React, { ReactChild } from "react";
-import { ViewMode } from "../../types/public-types";
+import { ViewMode, MidRangeData } from "../../types/public-types";
 import { TopPartOfCalendar } from "./top-part-of-calendar";
 import {
   getCachedDateTimeFormat,
@@ -22,7 +22,7 @@ export type CalendarProps = {
   columnWidth: number;
   fontFamily: string;
   fontSize: string;
-  calendarRanges: CalendarRanges,
+  calendarRanges: CalendarRanges;
 };
 
 export const Calendar: React.FC<CalendarProps> = ({
@@ -34,7 +34,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   columnWidth,
   fontFamily,
   fontSize,
-  calendarRanges
+  calendarRanges,
 }) => {
   const getCalendarValuesForYear = () => {
     const topValues: ReactChild[] = [];
@@ -87,7 +87,11 @@ export const Calendar: React.FC<CalendarProps> = ({
     const ranges = calendarRanges.ranges || {};
     for (let i = 0; i < dateSetup.dates.length; i++) {
       const date = dateSetup.dates[i];
-      const bottomValue = `${getLocaleMonth(date, locale)}${getRangesForDate(ranges, date, true)}`;
+      const bottomValue = `${getLocaleMonth(date, locale)}${getRangesForDate(
+        ranges,
+        date,
+        true
+      )}`;
       bottomValues.push(
         <text
           key={bottomValue + date.getFullYear()}
@@ -130,26 +134,32 @@ export const Calendar: React.FC<CalendarProps> = ({
     const bottomValues: ReactChild[] = [];
     const dates = dateSetup.dates;
     const ranges = calendarRanges.ranges || {};
-    let midRanges = {};
+    let midRanges: Record<string, MidRangeData> = {};
     const endDateMap = new Map();
     const currentCadenceDateSet = new Set();
     const currentDate = new Date();
 
     for (const [sprint, dates] of Object.entries(ranges)) {
-      const {startDate,endDate} = dates
+      const { startDate, endDate } = dates;
       const start = new Date(startDate);
       const end = new Date(endDate);
-      const midRange = (new Date(end as any - ((end as any) - (start as any)) / 2));
-      const midRangeTime = new Date(midRange.getFullYear(), midRange.getMonth(), midRange.getDate()).getTime();
+      const midRange = new Date(
+        (end as any) - ((end as any) - (start as any)) / 2
+      );
+      const midRangeTime = new Date(
+        midRange.getFullYear(),
+        midRange.getMonth(),
+        midRange.getDate()
+      ).getTime();
       midRanges[midRangeTime] = {
         date: midRange,
-        sprint
-      }
+        sprint,
+      };
       if (currentDate >= start && currentDate <= end) {
         addDatesToSet(start, end, currentCadenceDateSet);
       }
       endDateMap.set(new Date(endDate).getTime(), sprint);
-  }
+    }
 
     // const midRanges = Object.keys(ranges).map((key: any) => {
     //   return {
@@ -161,9 +171,13 @@ export const Calendar: React.FC<CalendarProps> = ({
     let tickX = 0;
 
     for (let i = 0; i < dates.length; i++) {
-      const date = dates[i]
+      const date = dates[i];
       tickX += columnWidth;
-      const currentDateTime = new Date(dates[i].getFullYear(), dates[i].getMonth(), dates[i].getDate()).getTime();
+      const currentDateTime = new Date(
+        dates[i].getFullYear(),
+        dates[i].getMonth(),
+        dates[i].getDate()
+      ).getTime();
       const matchedDateRange = midRanges[currentDateTime];
       const bottomValue = `${date.getMonth() + 1}/${date.getDate()}`;
       bottomValues.push(
@@ -178,7 +192,9 @@ export const Calendar: React.FC<CalendarProps> = ({
       );
 
       if (matchedDateRange) {
-        const rangeToShow = `${ranges[matchedDateRange.sprint].startDate} - ${ranges[matchedDateRange.sprint].endDate}`;
+        const rangeToShow = `${ranges[matchedDateRange.sprint].startDate} - ${
+          ranges[matchedDateRange.sprint].endDate
+        }`;
         topValues.push(
           <React.Fragment key={`sprint-${rangeToShow}`}>
             <text
@@ -188,13 +204,15 @@ export const Calendar: React.FC<CalendarProps> = ({
             >
               {matchedDateRange.sprint}
             </text>
-            { currentCadenceDateSet.has(date.getTime()) && <text
-              y={headerHeight * 0.3}
-              x={tickX - 48}
-              className={styles.currentCadence}
-            >
-              *
-            </text>}
+            {currentCadenceDateSet.has(date.getTime()) && (
+              <text
+                y={headerHeight * 0.3}
+                x={tickX - 48}
+                className={styles.currentCadence}
+              >
+                *
+              </text>
+            )}
             <text
               key={rangeToShow}
               y={headerHeight * 0.6}
@@ -206,17 +224,17 @@ export const Calendar: React.FC<CalendarProps> = ({
           </React.Fragment>
         );
       }
-      if(endDateMap.get(date.getTime())){
+      if (endDateMap.get(date.getTime())) {
         topValues.push(
           <line
-          x1={columnWidth * (i + 1)}
-          y1={0}
-          x2={columnWidth * (i + 1)}
-          y2={headerHeight * 0.5}
-          className={styles.calendarTopTick}
-          key={date.getTime() + "line"}
-        />
-        )
+            x1={columnWidth * (i + 1)}
+            y1={0}
+            x2={columnWidth * (i + 1)}
+            y2={headerHeight * 0.5}
+            className={styles.calendarTopTick}
+            key={date.getTime() + "line"}
+          />
+        );
       }
     }
     return [topValues, bottomValues];
@@ -234,7 +252,10 @@ export const Calendar: React.FC<CalendarProps> = ({
       let topValue = "";
       if (i === 0 || date.getMonth() !== dates[i - 1].getMonth()) {
         // top
-        topValue = `${getLocaleMonth(date, locale)}, ${date.getFullYear()}${getRangesForDate(ranges, date)}`;
+        topValue = `${getLocaleMonth(
+          date,
+          locale
+        )}, ${date.getFullYear()}${getRangesForDate(ranges, date)}`;
       }
       // bottom
       const bottomValue = `W${getWeekNumberISO8601(date)}`;
@@ -299,7 +320,10 @@ export const Calendar: React.FC<CalendarProps> = ({
         i + 1 !== dates.length &&
         date.getMonth() !== dates[i + 1].getMonth()
       ) {
-        const topValue = `${getLocaleMonth(date, locale)}${getRangesForDate(ranges, date)}`;
+        const topValue = `${getLocaleMonth(date, locale)}${getRangesForDate(
+          ranges,
+          date
+        )}`;
 
         topValues.push(
           <TopPartOfCalendar
@@ -311,8 +335,8 @@ export const Calendar: React.FC<CalendarProps> = ({
             xText={
               columnWidth * (i + 1) -
               getDaysInMonth(date.getMonth(), date.getFullYear()) *
-              columnWidth *
-              0.5
+                columnWidth *
+                0.5
             }
             yText={topDefaultHeight * 0.9}
           />
