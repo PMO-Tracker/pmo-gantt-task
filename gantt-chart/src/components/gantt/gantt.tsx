@@ -484,7 +484,6 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
     return (
       rangeKeys.length > 0 &&
       !rangeKeys.some(key => key.includes("Quarter")) &&
-      viewMode === ViewMode.Range &&
       piCadence.length > 0
     );
   };

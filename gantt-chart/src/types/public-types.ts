@@ -176,9 +176,12 @@ export interface StylingOption {
 
 export type PICadenceData = {
   id: string;
-  programIncrement: string;
+  programIncrementName: string;
+  piCadenceStartDate: string;
+  piCadenceEndDate: string;
   numberOfSprints: number;
   firstSprintOfProgramIncrement: string;
+  sprintNames: string[];
 };
 export interface GanttProps
   extends CalendarRanges,
@@ -196,8 +199,11 @@ export interface GanttProps
 }
 
 export type ProgramIncrementData = {
-  programIncrement: string;
-  tickX: number;
+  programIncrementName: string;
+  tickx: number[];
+  firstTick: number;
+  lastTick: number;
+  avgTick: number;
 };
 
 export type MidRangeData = {

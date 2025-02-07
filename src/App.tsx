@@ -513,6 +513,44 @@ function App() {
         headers={[  { key: 'stageName', title: 'Stage Name' },
         { key: 'subStageName', title: 'Substage' },
         { key: 'team', title: 'Team' }]}
+        piCadence={[
+          {
+            id: '08ace6af-f25b-4c86-a69a-401b0ce7d9xx',
+            programIncrementName: 'PI-1',
+            numberOfSprints: 3,
+            firstSprintOfProgramIncrement: 'Sprint 13',
+            piCadenceStartDate: '02/06/2024',
+            piCadenceEndDate: '03/06/2024',
+            sprintNames: ['Sprint 13', 'Sprint 14', 'Sprint 15']
+          },
+          {
+            id: '08ace6af-f25b-4c86-a69a-401b0ce7d93c',
+            programIncrementName: 'PI-2',
+            numberOfSprints: 2,
+            firstSprintOfProgramIncrement: 'Sprint 16',
+            piCadenceStartDate: '03/07/2024',
+            piCadenceEndDate: '03/26/2024',
+            sprintNames: ['Sprint 16', 'Sprint 17']
+          },
+          {
+            id: '08ace6af-f25b-4c86-a69a-401b0ce7d93xxc',
+            programIncrementName: 'PI-3',
+            numberOfSprints: 3,
+            firstSprintOfProgramIncrement: 'Sprint 16',
+            piCadenceStartDate: '03/27/2024',
+            piCadenceEndDate: '04/25/2024',
+            sprintNames: ['Sprint 18', 'Sprint 19', 'Sprint 20']
+          },
+          {
+            id: '08ace6af-f25b-4c86-a69a-401b0ce7dcc93c',
+            programIncrementName: 'PI-4',
+            numberOfSprints: 2,
+            firstSprintOfProgramIncrement: 'Sprint 16',
+            piCadenceStartDate: '04/26/2024',
+            piCadenceEndDate: '05/15/2024',
+            sprintNames: ['Sprint 21', 'Sprint 22']
+          }
+        ]}
         addRecord={handleAddRecord}
         onExpanderClick={handleExpanderClick}
         milestones={[
