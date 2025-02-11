@@ -64,9 +64,9 @@ export const PICadenceHeader: React.FC<PICadenceHeaderProps> = ({
       );
 
       const overlappingProgramIncrements = piCadence
-        .filter(({ piCadenceStartDate, piCadenceEndDate }) => {
-          const startDate = new Date(piCadenceStartDate);
-          const endDate = new Date(piCadenceEndDate);
+        .filter(({ piStartDate, piEndDate }) => {
+          const startDate = new Date(piStartDate);
+          const endDate = new Date(piEndDate);
 
           return startDate <= currentEnd && endDate >= currentStart;
         })

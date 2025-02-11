@@ -175,10 +175,10 @@ export interface StylingOption {
 }
 
 export type PICadenceData = {
-  id: string;
+  id?: string;
   programIncrementName: string;
-  piCadenceStartDate: string;
-  piCadenceEndDate: string;
+  piStartDate: string;
+  piEndDate: string;
   numberOfSprints: number;
   firstSprintOfProgramIncrement: string;
   sprintNames: string[];
