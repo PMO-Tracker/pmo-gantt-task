@@ -61,10 +61,10 @@ export const TaskGantt: React.FC<TaskGanttProps> = ({
     height: piCadenceHeaderHeight,
     backgroundColor: piCadenceHeaderBackgroundColor,
     dateSetup: calendarProps.dateSetup,
-    calendarRanges: calendarProps.calendarRanges,
     columnWidth: calendarProps.columnWidth,
     piCadence,
     headerHeight: calendarProps.headerHeight,
+    viewMode: calendarProps.viewMode
   };
 
   return (
