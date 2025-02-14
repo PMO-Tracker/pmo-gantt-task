@@ -1,3 +1,7 @@
 .piCadenceTitle {
   fill: #fff;
 }
+
+.piCadenceBorderLine {
+  stroke: #e6e4e4;
+}
