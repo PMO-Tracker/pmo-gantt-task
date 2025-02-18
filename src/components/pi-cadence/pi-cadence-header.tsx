@@ -104,18 +104,20 @@ export const PICadenceHeader: React.FC<PICadenceHeaderProps> = ({
         style={{ fill: backgroundColor }}
       />
       {programIncrementData.map(
-        ({ programIncrementName, avgTick, firstTick, lastTick, tickx }) => {
+        ({ programIncrementName, avgTick, firstTick, lastTick, tickx }, index) => {
           return (
             <React.Fragment>
-              <line
-                x1={firstTick - columnWidth}
-                y1={0}
-                x2={firstTick - columnWidth}
-                y2={headerHeight * 0.5}
-                className={styles.piCadenceBorderLine}
-                key={firstTick - columnWidth}
-                strokeWidth={2}
-              />
+          {index === 0 && (
+            <line
+              x1={firstTick - columnWidth}
+              y1={0}
+              x2={firstTick - columnWidth}
+              y2={headerHeight * 0.5}
+              className={styles.piCadenceBorderLine}
+              key={firstTick - columnWidth}
+              strokeWidth={2}
+            />
+        )}
               <text
                 y={headerHeight * 0.32}
                 x={tickx.length > 1 ? avgTick : firstTick - columnWidth}
