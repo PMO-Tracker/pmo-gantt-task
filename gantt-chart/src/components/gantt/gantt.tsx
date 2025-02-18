@@ -303,49 +303,50 @@ export const Gantt: React.FunctionComponent<GanttProps> = ({
 
   // scroll events
   useEffect(() => {
+    let animationFrameId: number;
+  
     const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+  
       if (event.shiftKey || event.deltaX) {
         const scrollMove = event.deltaX ? event.deltaX : event.deltaY;
-        let newScrollX = scrollX + scrollMove;
-        if (newScrollX < 0) {
-          newScrollX = 0;
-        } else if (newScrollX > svgWidth) {
-          newScrollX = svgWidth;
-        }
-        setScrollX(newScrollX);
-        event.preventDefault();
+        setScrollX((prev) => {
+          let newScrollX = prev + scrollMove;
+          if (newScrollX < 0) newScrollX = 0;
+          else if (newScrollX > svgWidth) newScrollX = svgWidth;
+          return newScrollX === prev ? prev : newScrollX;
+        });
       } else if (ganttHeight) {
-        let newScrollY = scrollY + event.deltaY;
-        if (newScrollY < 0) {
-          newScrollY = 0;
-        } else if (newScrollY > ganttFullHeight - ganttHeight) {
-          newScrollY = ganttFullHeight - ganttHeight;
-        }
-        if (newScrollY !== scrollY) {
-          setScrollY(newScrollY);
-          event.preventDefault();
-        }
+        setScrollY((prev) => {
+          let newScrollY = prev + event.deltaY;
+          if (newScrollY < 0) newScrollY = 0;
+          else if (newScrollY > ganttFullHeight - ganttHeight)
+            newScrollY = ganttFullHeight - ganttHeight;
+          return newScrollY === prev ? prev : newScrollY;
+        });
       }
-
+  
       setIgnoreScrollEvent(true);
+  
+      if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(() => {
+          animationFrameId = 0;
+        });
+      }
     };
-
-    // subscribe if scroll is necessary
+  
     wrapperRef?.current?.addEventListener("wheel", handleWheel, {
       passive: false,
     });
+  
     return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
       wrapperRef?.current?.removeEventListener("wheel", handleWheel);
     };
-  }, [
-    wrapperRef,
-    scrollY,
-    scrollX,
-    ganttHeight,
-    svgWidth,
-    rtl,
-    ganttFullHeight,
-  ]);
+  }, [wrapperRef, ganttHeight, svgWidth, ganttFullHeight]); 
+
 
   const handleScrollY = (event: SyntheticEvent<HTMLDivElement>) => {
     if (scrollY !== event.currentTarget.scrollTop && !ignoreScrollEvent) {
